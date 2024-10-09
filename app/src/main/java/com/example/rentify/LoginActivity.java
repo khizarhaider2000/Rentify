@@ -3,6 +3,9 @@ package com.example.rentify;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,17 +20,32 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_login);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
-    }
-    // allows going back to main menu
-    public void goBackToMain(View view) {
-        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-        startActivity(intent);
-        finish(); // Optionally call finish() to close the current activity
-    }
 
+        Button backButton = findViewById(R.id.backButton);
+
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+
+        EditText UsernameInput = findViewById(R.id.UsernameInput);
+        EditText PasswordInput = findViewById(R.id.PasswordInput);
+        Button loginButton = findViewById(R.id.loginButton);
+
+        loginButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String enteredUsername = UsernameInput.getText().toString();
+                String enteredPassword = PasswordInput.getText().toString();
+
+                // Check if the entered password matches the admin password
+                if (true) {
+                    Toast.makeText(LoginActivity.this, "Welcome back, " + enteredUsername, Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+    }
 }

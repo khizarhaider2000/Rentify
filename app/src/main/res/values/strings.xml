@@ -3,7 +3,16 @@
     <string name="loginText">Login</string>
     <string name="signupText">Sign up</string>
     <string name="adminLoginText">Admin Login</string>
+    <string name="userLoginText">User Login</string>
     <string name="usernameText">Username</string>
     <string name="passwordText">Password</string>
     <string name="backText">Back</string>
+    <string name="selectUserType">Select User Type</string>
+    <string name="lessorText">Lessor</string>
+    <string name="renterText">Renter</string>
+    <string name="lessorSignupText">Lessor Signup</string>
+    <string name="renterSignupText">Renter Signup</string>
+    <string name="FirstnameText">First Name</string>
+    <string name="LastnameText">Last name</string>
+    <string name="emailText">Email</string>
 </resources>
