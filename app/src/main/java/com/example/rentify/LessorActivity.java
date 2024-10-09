@@ -1,5 +1,6 @@
 package com.example.rentify;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.View;
@@ -65,6 +66,12 @@ public class LessorActivity extends AppCompatActivity {
                     Toast.makeText(LessorActivity.this, "Invalid Email!", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(LessorActivity.this, "Congrats on your Lessor Account", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(LessorActivity.this, PostLoginActivity.class);
+                    intent.putExtra("accountType", "Lessor");
+                    intent.putExtra("username", enteredUsername);
+                    intent.putExtra("email", enteredEmail);
+                    intent.putExtra("name", enteredFirstname + " " + enteredLastname);
+                    startActivity(intent);
                 }
             }
         });

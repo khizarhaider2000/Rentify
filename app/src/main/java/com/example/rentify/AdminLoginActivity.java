@@ -43,6 +43,12 @@ public class AdminLoginActivity extends AppCompatActivity {
                 // Check if the entered password matches the admin password
                 if (enteredUsername.equals(ADMIN_USERNAME) && enteredPassword.equals(ADMIN_PWD)) {
                     Toast.makeText(AdminLoginActivity.this, "Admin logged in!", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(AdminLoginActivity.this, PostLoginActivity.class);
+                    intent.putExtra("accountType", "Admin");
+                    intent.putExtra("username", ADMIN_USERNAME);
+                    intent.putExtra("email", "admin@rentify.com");
+                    intent.putExtra("name", "admin account");
+                    startActivity(intent);
                 } else {
                     Toast.makeText(AdminLoginActivity.this, "Incorrect username/password.", Toast.LENGTH_SHORT).show();
                 }

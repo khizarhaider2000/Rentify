@@ -1,5 +1,6 @@
 package com.example.rentify;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.View;
@@ -45,7 +46,7 @@ public class RenterActivity extends AppCompatActivity {
         EditText lastnameInput = findViewById(R.id.lastnameInput);
         EditText usernameInput = findViewById(R.id.usernameInput2);
         EditText emailInput = findViewById(R.id.emailInput);
-        EditText passwordInput = findViewById(R.id.passSignUpText);
+        EditText passwordInput = findViewById(R.id.PassSignUpText);
         Button signUpButton = findViewById(R.id.signUpButton);
 
         signUpButton.setOnClickListener(new View.OnClickListener() {
@@ -65,6 +66,12 @@ public class RenterActivity extends AppCompatActivity {
                     Toast.makeText(RenterActivity.this, "Invalid Email!", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(RenterActivity.this, "Congrats on your Renter Account", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(RenterActivity.this, PostLoginActivity.class);
+                    intent.putExtra("accountType", "Renter");
+                    intent.putExtra("username", enteredUsername);
+                    intent.putExtra("email", enteredEmail);
+                    intent.putExtra("name", enteredFirstname + " " + enteredLastname);
+                    startActivity(intent);
                 }
             }
         });

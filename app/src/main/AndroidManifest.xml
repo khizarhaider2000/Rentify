@@ -22,6 +22,9 @@
             android:name=".RenterActivity"
             android:exported="false" />
         <activity
+            android:name=".PostLoginActivity"
+            android:exported="false" />
+        <activity
             android:name=".LoginActivity"
             android:exported="false" />
         <activity
