@@ -10,38 +10,24 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-public class MainActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_main);
-
+        setContentView(R.layout.activity_login);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
     }
-
-    public void OnAdminLoginButton(View view) {
-        Intent intent = new Intent(getApplicationContext(), AdminLoginActivity.class);
-        startActivityForResult(intent, 0);
-    }
-
-    public void onLoginButton(View view) {
-        // Navigate to the Login Activity
-        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+    // allows going back to main menu
+    public void goBackToMain(View view) {
+        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
         startActivity(intent);
+        finish(); // Optionally call finish() to close the current activity
     }
-
-    public void onSignupButton(View view) {
-        // Navigate to the Signup Activity
-        Intent intent = new Intent(getApplicationContext(), SignupActivity.class);
-        startActivity(intent);
-    }
-
-
 
 }
