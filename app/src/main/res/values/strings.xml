@@ -5,4 +5,5 @@
     <string name="adminLoginText">Admin Login</string>
     <string name="usernameText">Username</string>
     <string name="passwordText">Password</string>
+    <string name="backText">Back</string>
 </resources>
