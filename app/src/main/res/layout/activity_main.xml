@@ -39,12 +39,12 @@
             android:id="@+id/LoginButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="3"
+            android:layout_weight="2"
             android:backgroundTint="#3F51B5"
+            android:onClick="onLoginButton"
             android:padding="12dp"
             android:text="@string/loginText"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-            android:onClick = "onLoginButton"/>
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
 
         <Button

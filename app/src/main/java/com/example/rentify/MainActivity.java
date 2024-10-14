@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void OnAdminLoginButton(View view) {
         Intent intent = new Intent(getApplicationContext(), AdminLoginActivity.class);
-        startActivityForResult(intent, 0);
+        startActivity(intent);
     }
 
     public void onLoginButton(View view) {
