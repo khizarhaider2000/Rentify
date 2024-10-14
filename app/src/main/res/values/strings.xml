@@ -12,8 +12,11 @@
     <string name="renterText">Renter</string>
     <string name="lessorSignupText">Lessor Signup</string>
     <string name="renterSignupText">Renter Signup</string>
-    <string name="FirstnameText">First Name</string>
+    <string name="FirstnameText">Firstname</string>
     <string name="LastnameText">Last name</string>
     <string name="emailText">Email</string>
     <string name="accountInfoText">Account Info:</string>
+    <string name="welcomeText">Welcome</string>
+    <string name="loggedInText">Logged in as</string>
+    <string name="logoutText">Logout</string>
 </resources>

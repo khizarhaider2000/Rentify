@@ -26,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void OnAdminLoginButton(View view) {
+        // Navigate to the Admin Login Activity
         Intent intent = new Intent(getApplicationContext(), AdminLoginActivity.class);
         startActivity(intent);
     }

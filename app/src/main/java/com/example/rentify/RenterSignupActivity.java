@@ -11,7 +11,7 @@ import android.widget.Toast;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
-public class RenterActivity extends AppCompatActivity {
+public class RenterSignupActivity extends AppCompatActivity {
     public boolean isAlpha(String name) {
         char[] chars = name.toCharArray();
         for (char c : chars) {
@@ -33,7 +33,7 @@ public class RenterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_renter);
+        setContentView(R.layout.activity_renter_signup);
 
         Button backButton = findViewById(R.id.backButton3);
 
@@ -61,14 +61,14 @@ public class RenterActivity extends AppCompatActivity {
                 String enteredPassword = passwordInput.getText().toString();
 
                 if ((enteredEmail.isEmpty()) || (enteredFirstname.isEmpty()) || (enteredLastname.isEmpty()) || (enteredUsername.isEmpty()) || (enteredPassword.isEmpty())) {
-                    Toast.makeText(RenterActivity.this, "All text fields must be filled", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RenterSignupActivity.this, "All text fields must be filled", Toast.LENGTH_SHORT).show();
                 } else if (!(isAlpha(enteredFirstname)) || !(isAlpha(enteredLastname))) {
-                    Toast.makeText(RenterActivity.this, "Username & Lastname must only be of letters", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RenterSignupActivity.this, "Username & Lastname must only be of letters", Toast.LENGTH_SHORT).show();
                 } else if (!(isValidEmailAddress(enteredEmail))){
-                    Toast.makeText(RenterActivity.this, "Invalid Email!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RenterSignupActivity.this, "Invalid Email!", Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(RenterActivity.this, "Congrats on your Renter Account", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(RenterActivity.this, PostLoginActivity.class);
+                    Toast.makeText(RenterSignupActivity.this, "Congrats on your Renter Account", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(RenterSignupActivity.this, PostLoginActivity.class);
                     intent.putExtra("accountType", "Renter");
                     intent.putExtra("username", enteredUsername);
                     intent.putExtra("email", enteredEmail);

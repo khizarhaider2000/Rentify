@@ -28,12 +28,12 @@ public class SignupActivity extends AppCompatActivity {
     }
 
     public void OnLessorButton(View view) {
-        Intent intent = new Intent(getApplicationContext(), LessorActivity.class);
+        Intent intent = new Intent(getApplicationContext(), LessorSignupActivity.class);
         startActivityForResult(intent, 0);
     }
 
     public void OnRenterButton(View view) {
-        Intent intent = new Intent(getApplicationContext(), RenterActivity.class);
+        Intent intent = new Intent(getApplicationContext(), RenterSignupActivity.class);
         startActivityForResult(intent, 0);
     }
 }

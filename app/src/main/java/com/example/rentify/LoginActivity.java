@@ -40,7 +40,7 @@ public class LoginActivity extends AppCompatActivity {
                 String enteredUsername = UsernameInput.getText().toString();
                 String enteredPassword = PasswordInput.getText().toString();
 
-                // Check if the entered password matches the admin password
+                // Check if the entered password matches the user password
                 if (true) {
                     Toast.makeText(LoginActivity.this, "Welcome back, " + enteredUsername, Toast.LENGTH_SHORT).show();
                 }

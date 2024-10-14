@@ -11,7 +11,7 @@ import android.widget.Toast;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
-public class LessorActivity extends AppCompatActivity {
+public class LessorSignupActivity extends AppCompatActivity {
     public boolean isAlpha(String name) {
         char[] chars = name.toCharArray();
         for (char c : chars) {
@@ -33,7 +33,7 @@ public class LessorActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_lessor);
+        setContentView(R.layout.activity_lessor_signup);
 
         Button backButton = findViewById(R.id.backButton2);
 
@@ -61,14 +61,14 @@ public class LessorActivity extends AppCompatActivity {
                 String enteredPassword = passwordInput.getText().toString();
 
                 if ((enteredEmail.isEmpty()) || (enteredFirstname.isEmpty()) || (enteredLastname.isEmpty()) || (enteredUsername.isEmpty()) || (enteredPassword.isEmpty())) {
-                    Toast.makeText(LessorActivity.this, "All text fields must be filled", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LessorSignupActivity.this, "All text fields must be filled", Toast.LENGTH_SHORT).show();
                 } else if (!(isAlpha(enteredFirstname)) || !(isAlpha(enteredLastname))) {
-                    Toast.makeText(LessorActivity.this, "Username & Lastname must only be of letters", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LessorSignupActivity.this, "Username & Lastname must only be of letters", Toast.LENGTH_SHORT).show();
                 } else if (!(isValidEmailAddress(enteredEmail))){
-                    Toast.makeText(LessorActivity.this, "Invalid Email!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LessorSignupActivity.this, "Invalid Email!", Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(LessorActivity.this, "Congrats on your Lessor Account", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(LessorActivity.this, PostLoginActivity.class);
+                    Toast.makeText(LessorSignupActivity.this, "Congrats on your Lessor Account", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(LessorSignupActivity.this, PostLoginActivity.class);
                     intent.putExtra("accountType", "Lessor");
                     intent.putExtra("username", enteredUsername);
                     intent.putExtra("email", enteredEmail);

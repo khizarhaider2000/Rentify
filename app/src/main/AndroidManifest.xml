@@ -16,10 +16,10 @@
             android:name=".SignupActivity"
             android:exported="false" />
         <activity
-            android:name=".LessorActivity"
+            android:name=".LessorSignupActivity"
             android:exported="false" />
         <activity
-            android:name=".RenterActivity"
+            android:name=".RenterSignupActivity"
             android:exported="false" />
         <activity
             android:name=".PostLoginActivity"
