@@ -11,16 +11,7 @@ import android.widget.Toast;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-
-
 public class LessorSignupActivity extends AppCompatActivity {
-
-    FirebaseDatabase fDatabse;
-    DatabaseReference dRef;
-
-
     public boolean isAlpha(String name) {
         char[] chars = name.toCharArray();
         for (char c : chars) {
@@ -40,10 +31,6 @@ public class LessorSignupActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-        fDatabse = FirebaseDatabase.getInstance();
-
-
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_lessor_signup);
@@ -88,12 +75,6 @@ public class LessorSignupActivity extends AppCompatActivity {
                     intent.putExtra("name", enteredFirstname + " " + enteredLastname);
                     startActivity(intent);
                 }
-
-                dRef.child("firstName").setValue(enteredFirstname);
-                dRef.child("lastName").setValue(enteredLastname);
-                dRef.child("email").setValue(enteredEmail);
-                dRef.child("password").setValue(enteredPassword);
-
             }
         });
 
