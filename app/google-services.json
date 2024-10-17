@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "374540801150",
+    "firebase_url": "https://rentify-d7b4e-default-rtdb.firebaseio.com",
     "project_id": "rentify-d7b4e",
     "storage_bucket": "rentify-d7b4e.appspot.com"
   },

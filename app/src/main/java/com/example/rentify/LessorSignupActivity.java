@@ -17,9 +17,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class LessorSignupActivity extends AppCompatActivity {
 
-    FirebaseDatabase fDatabse;
     DatabaseReference dRef;
-
 
     public boolean isAlpha(String name) {
         char[] chars = name.toCharArray();
@@ -41,8 +39,7 @@ public class LessorSignupActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        fDatabse = FirebaseDatabase.getInstance();
-
+        dRef = FirebaseDatabase.getInstance().getReference();
 
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
@@ -67,11 +64,13 @@ public class LessorSignupActivity extends AppCompatActivity {
         signUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 String enteredFirstname = firstnameInput.getText().toString();
                 String enteredLastname = lastnameInput.getText().toString();
                 String enteredUsername = usernameInput.getText().toString();
                 String enteredEmail = emailInput.getText().toString();
                 String enteredPassword = passwordInput.getText().toString();
+
 
                 if ((enteredEmail.isEmpty()) || (enteredFirstname.isEmpty()) || (enteredLastname.isEmpty()) || (enteredUsername.isEmpty()) || (enteredPassword.isEmpty())) {
                     Toast.makeText(LessorSignupActivity.this, "All text fields must be filled", Toast.LENGTH_SHORT).show();
@@ -80,6 +79,14 @@ public class LessorSignupActivity extends AppCompatActivity {
                 } else if (!(isValidEmailAddress(enteredEmail))){
                     Toast.makeText(LessorSignupActivity.this, "Invalid Email!", Toast.LENGTH_SHORT).show();
                 } else {
+
+                    dRef.child(enteredUsername).child("userType").setValue("Lessor");
+                    dRef.child(enteredUsername).child("firstName").setValue(enteredFirstname);
+                    dRef.child(enteredUsername).child("lastName").setValue(enteredLastname);
+                    dRef.child(enteredUsername).child("email").setValue(enteredEmail);
+                    dRef.child(enteredUsername).child("password").setValue(enteredPassword);
+
+
                     Toast.makeText(LessorSignupActivity.this, "Congrats on your Lessor Account", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(LessorSignupActivity.this, PostLoginActivity.class);
                     intent.putExtra("accountType", "Lessor");
@@ -87,12 +94,8 @@ public class LessorSignupActivity extends AppCompatActivity {
                     intent.putExtra("email", enteredEmail);
                     intent.putExtra("name", enteredFirstname + " " + enteredLastname);
                     startActivity(intent);
-                }
 
-                dRef.child("firstName").setValue(enteredFirstname);
-                dRef.child("lastName").setValue(enteredLastname);
-                dRef.child("email").setValue(enteredEmail);
-                dRef.child("password").setValue(enteredPassword);
+                }
 
             }
         });

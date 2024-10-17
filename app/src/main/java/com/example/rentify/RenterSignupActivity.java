@@ -11,7 +11,13 @@ import android.widget.Toast;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 public class RenterSignupActivity extends AppCompatActivity {
+
+    DatabaseReference dRef;
+
     public boolean isAlpha(String name) {
         char[] chars = name.toCharArray();
         for (char c : chars) {
@@ -31,6 +37,9 @@ public class RenterSignupActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        dRef = FirebaseDatabase.getInstance().getReference();
+
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_renter_signup);
@@ -67,6 +76,13 @@ public class RenterSignupActivity extends AppCompatActivity {
                 } else if (!(isValidEmailAddress(enteredEmail))){
                     Toast.makeText(RenterSignupActivity.this, "Invalid Email!", Toast.LENGTH_SHORT).show();
                 } else {
+
+                    dRef.child(enteredUsername).child("userType").setValue("Renter");
+                    dRef.child(enteredUsername).child("firstName").setValue(enteredFirstname);
+                    dRef.child(enteredUsername).child("lastName").setValue(enteredLastname);
+                    dRef.child(enteredUsername).child("email").setValue(enteredEmail);
+                    dRef.child(enteredUsername).child("password").setValue(enteredPassword);
+
                     Toast.makeText(RenterSignupActivity.this, "Congrats on your Renter Account", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(RenterSignupActivity.this, PostLoginActivity.class);
                     intent.putExtra("accountType", "Renter");
