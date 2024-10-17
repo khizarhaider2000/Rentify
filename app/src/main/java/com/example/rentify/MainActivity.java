@@ -25,12 +25,6 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public void OnAdminLoginButton(View view) {
-        // Navigate to the Admin Login Activity
-        Intent intent = new Intent(getApplicationContext(), AdminLoginActivity.class);
-        startActivity(intent);
-    }
-
     public void onLoginButton(View view) {
         // Navigate to the Login Activity
         Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
@@ -43,6 +37,10 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-
+    public void OnAdminLoginButton(View view) {
+        // Navigate to the Admin Login Activity
+        Intent intent = new Intent(getApplicationContext(), AdminLoginActivity.class);
+        startActivity(intent);
+    }
 
 }

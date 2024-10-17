@@ -16,7 +16,7 @@ public class SignupActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_signup);
 
-        // Set up the back button to go back to the main activity
+        // Check for back button being clicked
         Button backButton = findViewById(R.id.backButton);
 
         backButton.setOnClickListener(new View.OnClickListener() {
@@ -28,11 +28,13 @@ public class SignupActivity extends AppCompatActivity {
     }
 
     public void OnLessorButton(View view) {
+        // Navigate to the Lessor Signup Activity
         Intent intent = new Intent(getApplicationContext(), LessorSignupActivity.class);
         startActivityForResult(intent, 0);
     }
 
     public void OnRenterButton(View view) {
+        // Navigate to the Renter Signup Activity
         Intent intent = new Intent(getApplicationContext(), RenterSignupActivity.class);
         startActivityForResult(intent, 0);
     }

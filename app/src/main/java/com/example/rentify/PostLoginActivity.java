@@ -15,17 +15,17 @@ public class PostLoginActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_post_login);
 
-        String name = getIntent().getStringExtra("name");
+        // Collect the username and account type information to update TextViews on layout
+        String username = getIntent().getStringExtra("username");
         String accountType = getIntent().getStringExtra("accountType");
 
-        // Find the TextViews in the layout
-        TextView nameTextView = findViewById(R.id.nameText);
+        TextView usernameTextView = findViewById(R.id.usernameText);
         TextView accountTypeTextView = findViewById(R.id.accountTypeText);
 
-        // Set the text for each TextView
-        nameTextView.setText(name + "!");
+        usernameTextView.setText(username + "!");
         accountTypeTextView.setText(accountType);
 
+        // Check for logout button being clicked
         Button logoutButton = findViewById(R.id.logoutButton);
 
         logoutButton.setOnClickListener(new View.OnClickListener() {

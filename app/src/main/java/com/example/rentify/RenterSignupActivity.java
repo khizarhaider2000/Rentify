@@ -18,6 +18,7 @@ public class RenterSignupActivity extends AppCompatActivity {
 
     DatabaseReference dRef;
 
+    // Validates if input contains alphabets only
     public boolean isAlpha(String name) {
         char[] chars = name.toCharArray();
         for (char c : chars) {
@@ -28,6 +29,7 @@ public class RenterSignupActivity extends AppCompatActivity {
         return true;
     }
 
+    // Validates email address
     public boolean isValidEmailAddress(String email) {
         if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             return false;
@@ -44,6 +46,7 @@ public class RenterSignupActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_renter_signup);
 
+        // Check for back button being clicked
         Button backButton = findViewById(R.id.backButton3);
 
         backButton.setOnClickListener(new View.OnClickListener() {
@@ -53,6 +56,7 @@ public class RenterSignupActivity extends AppCompatActivity {
             }
         });
 
+        // Collect signup information from input fields and check for signup button being clicked
         EditText firstnameInput = findViewById(R.id.firstnameInput);
         EditText lastnameInput = findViewById(R.id.lastnameInput);
         EditText usernameInput = findViewById(R.id.usernameInput2);
@@ -76,13 +80,14 @@ public class RenterSignupActivity extends AppCompatActivity {
                 } else if (!(isValidEmailAddress(enteredEmail))){
                     Toast.makeText(RenterSignupActivity.this, "Invalid Email!", Toast.LENGTH_SHORT).show();
                 } else {
+                    // Database reference stores all renter information under "Renters"
+                    dRef.child("Renters").child(enteredUsername).child("userType").setValue("Renter");
+                    dRef.child("Renters").child(enteredUsername).child("firstName").setValue(enteredFirstname);
+                    dRef.child("Renters").child(enteredUsername).child("lastName").setValue(enteredLastname);
+                    dRef.child("Renters").child(enteredUsername).child("email").setValue(enteredEmail);
+                    dRef.child("Renters").child(enteredUsername).child("password").setValue(enteredPassword);
 
-                    dRef.child(enteredUsername).child("userType").setValue("Renter");
-                    dRef.child(enteredUsername).child("firstName").setValue(enteredFirstname);
-                    dRef.child(enteredUsername).child("lastName").setValue(enteredLastname);
-                    dRef.child(enteredUsername).child("email").setValue(enteredEmail);
-                    dRef.child(enteredUsername).child("password").setValue(enteredPassword);
-
+                    // Navigate to Post Login Activity along with renter information
                     Toast.makeText(RenterSignupActivity.this, "Congrats on your Renter Account", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(RenterSignupActivity.this, PostLoginActivity.class);
                     intent.putExtra("accountType", "Renter");

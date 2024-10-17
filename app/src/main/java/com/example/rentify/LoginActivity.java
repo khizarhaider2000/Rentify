@@ -21,6 +21,7 @@ public class LoginActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_login);
 
+        // Check for back button being clicked
         Button backButton = findViewById(R.id.backButton);
 
         backButton.setOnClickListener(new View.OnClickListener() {
@@ -30,6 +31,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+        // Collect login information from input fields and check for login button being clicked
         EditText UsernameInput = findViewById(R.id.UsernameInput);
         EditText PasswordInput = findViewById(R.id.PasswordInput);
         Button loginButton = findViewById(R.id.loginButton);
@@ -40,9 +42,14 @@ public class LoginActivity extends AppCompatActivity {
                 String enteredUsername = UsernameInput.getText().toString();
                 String enteredPassword = PasswordInput.getText().toString();
 
-                // Check if the entered password matches the user password
+                // User authentication from database not fully implemented (will be done for Deliverable 2)
+                // Temporarily, any user can login and navigate to Post Login Activity
                 if (true) {
                     Toast.makeText(LoginActivity.this, "Welcome back, " + enteredUsername, Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(LoginActivity.this, PostLoginActivity.class);
+                    intent.putExtra("accountType", "User");
+                    intent.putExtra("username", enteredUsername);
+                    startActivity(intent);
                 }
             }
         });

@@ -21,6 +21,7 @@ public class AdminLoginActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_admin_login);
 
+        // Check for back button being clicked
         Button backButton = findViewById(R.id.backButton);
 
         backButton.setOnClickListener(new View.OnClickListener() {
@@ -30,6 +31,7 @@ public class AdminLoginActivity extends AppCompatActivity {
             }
         });
 
+        // Collect admin login information from input fields and check for login button being clicked
         EditText UsernameInput = findViewById(R.id.UsernameInput);
         EditText PasswordInput = findViewById(R.id.PasswordInput);
         Button loginButton = findViewById(R.id.loginButton);
@@ -40,7 +42,8 @@ public class AdminLoginActivity extends AppCompatActivity {
                 String enteredUsername = UsernameInput.getText().toString();
                 String enteredPassword = PasswordInput.getText().toString();
 
-                // Check if the entered password matches the admin password
+                // Check if the entered inputs match the admin username and password
+                // If successful, navigate to Post Login Activity
                 if (enteredUsername.equals(ADMIN_USERNAME) && enteredPassword.equals(ADMIN_PWD)) {
                     Toast.makeText(AdminLoginActivity.this, "Admin logged in!", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(AdminLoginActivity.this, PostLoginActivity.class);
