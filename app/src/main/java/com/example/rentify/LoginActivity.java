@@ -44,7 +44,9 @@ public class LoginActivity extends AppCompatActivity {
 
                 // User authentication from database not fully implemented (will be done for Deliverable 2)
                 // Temporarily, any user can login and navigate to Post Login Activity
-                if (true) {
+                if (enteredUsername.isEmpty() || enteredPassword.isEmpty()){
+                    Toast.makeText(LoginActivity.this, "All input fields must be filled", Toast.LENGTH_SHORT).show();
+                } else {
                     Toast.makeText(LoginActivity.this, "Welcome back, " + enteredUsername, Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(LoginActivity.this, PostLoginActivity.class);
                     intent.putExtra("accountType", "User");
