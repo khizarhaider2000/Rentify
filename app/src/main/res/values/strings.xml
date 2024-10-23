@@ -20,4 +20,5 @@
     <string name="loggedInText">Logged in as</string>
     <string name="logoutText">Logout</string>
     <string name="categoriesText">Categories</string>
+    <string name="userAccountsText">User Accounts</string>
 </resources>

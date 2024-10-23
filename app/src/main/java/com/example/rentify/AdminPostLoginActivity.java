@@ -28,7 +28,6 @@ public class AdminPostLoginActivity extends AppCompatActivity {
 
         // Check for logout button being clicked
         Button logoutButton = findViewById(R.id.logoutButton);
-
         logoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -38,11 +37,22 @@ public class AdminPostLoginActivity extends AppCompatActivity {
             }
         });
 
+        // Check for categories button being clicked
         Button categoriesButton = findViewById(R.id.categoriesButton);
         categoriesButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), CategoriesActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        // Check for user accounts button being clicked
+        Button userAccountsButton = findViewById(R.id.userAccountsButton);
+        userAccountsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), UserAccountsActivity.class);
                 startActivity(intent);
             }
         });

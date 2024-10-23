@@ -48,7 +48,7 @@ public class LessorSignupActivity extends AppCompatActivity {
         setContentView(R.layout.activity_lessor_signup);
 
         // Check for back button being clicked
-        Button backButton = findViewById(R.id.backButton2);
+        Button backButton = findViewById(R.id.backButton);
 
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override

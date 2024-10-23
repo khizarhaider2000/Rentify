@@ -47,7 +47,7 @@ public class RenterSignupActivity extends AppCompatActivity {
         setContentView(R.layout.activity_renter_signup);
 
         // Check for back button being clicked
-        Button backButton = findViewById(R.id.backButton3);
+        Button backButton = findViewById(R.id.backButton);
 
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
