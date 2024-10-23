@@ -19,4 +19,5 @@
     <string name="welcomeText">Welcome</string>
     <string name="loggedInText">Logged in as</string>
     <string name="logoutText">Logout</string>
+    <string name="categoriesText">Categories</string>
 </resources>

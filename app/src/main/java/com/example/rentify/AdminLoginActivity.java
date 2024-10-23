@@ -46,7 +46,7 @@ public class AdminLoginActivity extends AppCompatActivity {
                 // If successful, navigate to Post Login Activity
                 if (enteredUsername.equals(ADMIN_USERNAME) && enteredPassword.equals(ADMIN_PWD)) {
                     Toast.makeText(AdminLoginActivity.this, "Admin logged in!", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(AdminLoginActivity.this, PostLoginActivity.class);
+                    Intent intent = new Intent(AdminLoginActivity.this, AdminPostLoginActivity.class);
                     intent.putExtra("accountType", "Admin");
                     intent.putExtra("username", ADMIN_USERNAME);
                     intent.putExtra("email", "admin@rentify.com");
