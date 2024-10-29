@@ -11,8 +11,11 @@ import android.widget.Toast;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class RenterSignupActivity extends AppCompatActivity {
 
@@ -79,22 +82,53 @@ public class RenterSignupActivity extends AppCompatActivity {
                     Toast.makeText(RenterSignupActivity.this, "Username & Lastname must only be of letters", Toast.LENGTH_SHORT).show();
                 } else if (!(isValidEmailAddress(enteredEmail))){
                     Toast.makeText(RenterSignupActivity.this, "Invalid Email!", Toast.LENGTH_SHORT).show();
-                } else {
-                    // Database reference stores all renter information under "Renters"
-                    dRef.child("Renters").child(enteredUsername).child("userType").setValue("Renter");
-                    dRef.child("Renters").child(enteredUsername).child("firstName").setValue(enteredFirstname);
-                    dRef.child("Renters").child(enteredUsername).child("lastName").setValue(enteredLastname);
-                    dRef.child("Renters").child(enteredUsername).child("email").setValue(enteredEmail);
-                    dRef.child("Renters").child(enteredUsername).child("password").setValue(enteredPassword);
+                } else if (enteredPassword.length() < 6) {
+                    Toast.makeText(RenterSignupActivity.this, "Password must be 6 or more characters", Toast.LENGTH_SHORT).show();
+                }  else {
+                    // Check if the username or email already exists in the database
+                    dRef.child("Renters").child(enteredUsername).addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot snapshot) {
+                            if (snapshot.exists()) {
+                                Toast.makeText(RenterSignupActivity.this, "Username is already taken", Toast.LENGTH_SHORT).show();
+                            } else {
+                                // Check if the email already exists
+                                dRef.child("Renters").orderByChild("email").equalTo(enteredEmail).addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(DataSnapshot snapshot) {
+                                        if (snapshot.exists()) {
+                                            Toast.makeText(RenterSignupActivity.this, "Email is already associated with an account", Toast.LENGTH_SHORT).show();
+                                        } else {
+                                            // Database reference stores all lessor information under "Lessors"
+                                            dRef.child("Renters").child(enteredUsername).child("userType").setValue("Renter");
+                                            dRef.child("Renters").child(enteredUsername).child("firstName").setValue(enteredFirstname);
+                                            dRef.child("Renters").child(enteredUsername).child("lastName").setValue(enteredLastname);
+                                            dRef.child("Renters").child(enteredUsername).child("email").setValue(enteredEmail);
+                                            dRef.child("Renters").child(enteredUsername).child("password").setValue(enteredPassword);
 
-                    // Navigate to Post Login Activity along with renter information
-                    Toast.makeText(RenterSignupActivity.this, "Congrats on your Renter Account", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(RenterSignupActivity.this, PostLoginActivity.class);
-                    intent.putExtra("accountType", "Renter");
-                    intent.putExtra("username", enteredUsername);
-                    intent.putExtra("email", enteredEmail);
-                    intent.putExtra("name", enteredFirstname + " " + enteredLastname);
-                    startActivity(intent);
+                                            // Navigate to Post Login Activity along with renter information
+                                            Toast.makeText(RenterSignupActivity.this, "Congrats on your Lessor Account", Toast.LENGTH_SHORT).show();
+                                            Intent intent = new Intent(RenterSignupActivity.this, PostLoginActivity.class);
+                                            intent.putExtra("accountType", "Renter");
+                                            intent.putExtra("username", enteredUsername);
+                                            intent.putExtra("email", enteredEmail);
+                                            intent.putExtra("name", enteredFirstname + " " + enteredLastname);
+                                            startActivity(intent);
+                                            finish();
+                                        }
+                                    }
+                                    @Override
+                                    public void onCancelled(DatabaseError databaseError) {
+                                        Toast.makeText(RenterSignupActivity.this, "Database error: " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                            }
+                        }
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+                            Toast.makeText(RenterSignupActivity.this, "Database error: " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
                 }
             }
         });

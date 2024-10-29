@@ -52,6 +52,7 @@ public class AdminLoginActivity extends AppCompatActivity {
                     intent.putExtra("email", "admin@rentify.com");
                     intent.putExtra("name", "Admin Name");
                     startActivity(intent);
+                    finish();
                 } else {
                     Toast.makeText(AdminLoginActivity.this, "Incorrect username/password.", Toast.LENGTH_SHORT).show();
                 }

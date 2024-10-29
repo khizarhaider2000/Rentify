@@ -11,8 +11,11 @@ import android.widget.Toast;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 
 public class LessorSignupActivity extends AppCompatActivity {
@@ -82,25 +85,54 @@ public class LessorSignupActivity extends AppCompatActivity {
                     Toast.makeText(LessorSignupActivity.this, "Firstname & Lastname must only be of letters", Toast.LENGTH_SHORT).show();
                 } else if (!(isValidEmailAddress(enteredEmail))){
                     Toast.makeText(LessorSignupActivity.this, "Invalid Email!", Toast.LENGTH_SHORT).show();
+                } else if (enteredPassword.length() < 6) {
+                    Toast.makeText(LessorSignupActivity.this, "Password must be 6 or more characters", Toast.LENGTH_SHORT).show();
                 } else {
-                    // Database reference stores all lessor information under "Lessors"
-                    dRef.child("Lessors").child(enteredUsername).child("userType").setValue("Lessor");
-                    dRef.child("Lessors").child(enteredUsername).child("firstName").setValue(enteredFirstname);
-                    dRef.child("Lessors").child(enteredUsername).child("lastName").setValue(enteredLastname);
-                    dRef.child("Lessors").child(enteredUsername).child("email").setValue(enteredEmail);
-                    dRef.child("Lessors").child(enteredUsername).child("password").setValue(enteredPassword);
+                    // Check if the username or email already exists in the database
+                    dRef.child("Lessors").child(enteredUsername).addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot snapshot) {
+                            if (snapshot.exists()) {
+                                Toast.makeText(LessorSignupActivity.this, "Username is already taken", Toast.LENGTH_SHORT).show();
+                            } else {
+                                // Check if the email already exists
+                                dRef.child("Lessors").orderByChild("email").equalTo(enteredEmail).addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(DataSnapshot snapshot) {
+                                        if (snapshot.exists()) {
+                                            Toast.makeText(LessorSignupActivity.this, "Email is already associated with an account", Toast.LENGTH_SHORT).show();
+                                        } else {
+                                            // Database reference stores all lessor information under "Lessors"
+                                            dRef.child("Lessors").child(enteredUsername).child("userType").setValue("Lessor");
+                                            dRef.child("Lessors").child(enteredUsername).child("firstName").setValue(enteredFirstname);
+                                            dRef.child("Lessors").child(enteredUsername).child("lastName").setValue(enteredLastname);
+                                            dRef.child("Lessors").child(enteredUsername).child("email").setValue(enteredEmail);
+                                            dRef.child("Lessors").child(enteredUsername).child("password").setValue(enteredPassword);
 
-                    // Navigate to Post Login Activity along with lessor information
-                    Toast.makeText(LessorSignupActivity.this, "Congrats on your Lessor Account", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(LessorSignupActivity.this, PostLoginActivity.class);
-                    intent.putExtra("accountType", "Lessor");
-                    intent.putExtra("username", enteredUsername);
-                    intent.putExtra("email", enteredEmail);
-                    intent.putExtra("name", enteredFirstname + " " + enteredLastname);
-                    startActivity(intent);
-
+                                            // Navigate to Post Login Activity along with lessor information
+                                            Toast.makeText(LessorSignupActivity.this, "Congrats on your Lessor Account", Toast.LENGTH_SHORT).show();
+                                            Intent intent = new Intent(LessorSignupActivity.this, PostLoginActivity.class);
+                                            intent.putExtra("accountType", "Lessor");
+                                            intent.putExtra("username", enteredUsername);
+                                            intent.putExtra("email", enteredEmail);
+                                            intent.putExtra("name", enteredFirstname + " " + enteredLastname);
+                                            startActivity(intent);
+                                            finish();
+                                        }
+                                    }
+                                    @Override
+                                    public void onCancelled(DatabaseError databaseError) {
+                                        Toast.makeText(LessorSignupActivity.this, "Database error: " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                            }
+                        }
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+                            Toast.makeText(LessorSignupActivity.this, "Database error: " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
                 }
-
             }
         });
 
