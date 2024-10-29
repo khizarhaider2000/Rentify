@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/login_background"
+    tools:context=".AddCategoryActivity">
+
+    <TextView
+        android:id="@+id/addCategoryTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="75dp"
+        android:fontFamily="serif"
+        android:text="@string/addCategoryText"
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textColor="@color/white"
+        android:textSize="34sp"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/backButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginBottom="50dp"
+        android:layout_weight="2"
+        android:backgroundTint="#3F51B5"
+        android:padding="12dp"
+        android:text="@string/backText"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="100dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="200dp"
+        android:layout_marginEnd="30dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_marginHorizontal="30dp">
+
+        <EditText
+            android:id="@+id/categoryName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/nameText"
+            android:inputType="text"
+            android:textColor="#000000"
+            android:textColorHint="#000000"
+            android:textSize="28sp" />
+
+        <EditText
+            android:id="@+id/categoryDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:fadeScrollbars="false"
+            android:hint="@string/descriptionText"
+            android:inputType="textMultiLine"
+            android:maxLines="7"
+            android:overScrollMode="always"
+            android:scrollbars="vertical"
+            android:textColor="#000000"
+            android:textColorHint="#000000"
+            android:textSize="22sp" />
+
+        <Button
+            android:id="@+id/addCategoryButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="35dp"
+            android:layout_weight="2"
+            android:backgroundTint="#3F51B5"
+            android:paddingHorizontal="50dp"
+            android:paddingVertical="12dp"
+            android:text="@string/addText"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textSize="20sp" />
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

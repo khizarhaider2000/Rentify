@@ -21,4 +21,8 @@
     <string name="logoutText">Logout</string>
     <string name="categoriesText">Categories</string>
     <string name="userAccountsText">User Accounts</string>
+    <string name="addText">Add</string>
+    <string name="addCategoryText">Add Category</string>
+    <string name="nameText">Name</string>
+    <string name="descriptionText">Description</string>
 </resources>

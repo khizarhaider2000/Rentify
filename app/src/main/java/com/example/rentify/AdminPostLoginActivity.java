@@ -39,7 +39,7 @@ public class AdminPostLoginActivity extends AppCompatActivity {
         });
 
         // Check for categories button being clicked
-        Button categoriesButton = findViewById(R.id.categoriesButton);
+        Button categoriesButton = findViewById(R.id.addButton);
         categoriesButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
