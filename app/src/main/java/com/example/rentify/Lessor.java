@@ -4,7 +4,6 @@ public class Lessor extends User {
     private String firstName;
     private String lastName;
     private String email;
-    private String userType;
 
     // Default constructor required for calls to DataSnapshot.getValue(Lessor.class)
     public Lessor() {
@@ -12,11 +11,10 @@ public class Lessor extends User {
     }
 
     public Lessor(String firstName, String lastName, String email, String password, String userName, String userType) {
-        super(userName, password);
+        super(userName, password, userType);
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
-        this.userType = userType;
     }
 
     // Getters and Setters
@@ -29,6 +27,4 @@ public class Lessor extends User {
     public String getEmail() { return email; }
     public void setEmail(String email) { this.email = email; }
 
-    public String getUserType() { return userType; }
-    public void setUserType(String userType) { this.userType = userType; }
 }

@@ -44,10 +44,6 @@ public class UserAdapter extends ArrayAdapter<User> {
             textViewEmail.setText("Email: N/A");
         }
 
-
-        //textViewName.setText("Name: " + user.getFirstName() + " " + user.getLastName());
-        //textViewEmail.setText("Email: " + user.getEmail());
-
         return listViewItem;
     }
 }
