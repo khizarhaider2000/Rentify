@@ -14,6 +14,7 @@ public class AdminLoginActivity extends AppCompatActivity {
 
     private static final String ADMIN_USERNAME = "admin";
     private static final String ADMIN_PWD = "XPI76SZUqyCjVxgnUjm0";
+    private static final Admin admin = new Admin(ADMIN_USERNAME,ADMIN_PWD, "Admin");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,13 +45,11 @@ public class AdminLoginActivity extends AppCompatActivity {
 
                 // Check if the entered inputs match the admin username and password
                 // If successful, navigate to Post Login Activity
-                if (enteredUsername.equals(ADMIN_USERNAME) && enteredPassword.equals(ADMIN_PWD)) {
+                if (enteredUsername.equals(admin.getUsername()) && enteredPassword.equals(admin.getPassword())) {
                     Toast.makeText(AdminLoginActivity.this, "Admin logged in!", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(AdminLoginActivity.this, AdminPostLoginActivity.class);
-                    intent.putExtra("accountType", "Admin");
-                    intent.putExtra("username", ADMIN_USERNAME);
-                    intent.putExtra("email", "admin@rentify.com");
-                    intent.putExtra("name", "Admin Name");
+                    intent.putExtra("accountType", admin.getUserType());
+                    intent.putExtra("username", admin.getUsername());
                     startActivity(intent);
                     finish();
                 } else {

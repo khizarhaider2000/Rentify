@@ -29,9 +29,24 @@ public class UserAdapter extends ArrayAdapter<User> {
         TextView textViewUsername = listViewItem.findViewById(R.id.userNameTextView);
 
         User user = users.get(position);
-        textViewName.setText("Name: " + user.getFirstName() + " " + user.getLastName());
-        textViewEmail.setText("Email: " + user.getEmail());
         textViewUsername.setText(user.getUsername());
+
+        if (user instanceof Renter) {
+            Renter renter = (Renter) user;
+            textViewName.setText("Name: " + renter.getFirstName() + " " + renter.getLastName());
+            textViewEmail.setText("Email: " + renter.getEmail());
+        } else if (user instanceof Lessor) {
+            Lessor lessor = (Lessor) user;
+            textViewName.setText("Name: " + lessor.getFirstName() + " " + lessor.getLastName());
+            textViewEmail.setText("Email: " + lessor.getEmail());
+        } else {
+            textViewName.setText("Name: N/A");
+            textViewEmail.setText("Email: N/A");
+        }
+
+
+        //textViewName.setText("Name: " + user.getFirstName() + " " + user.getLastName());
+        //textViewEmail.setText("Email: " + user.getEmail());
 
         return listViewItem;
     }
