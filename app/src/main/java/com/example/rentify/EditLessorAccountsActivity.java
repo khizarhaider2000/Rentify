@@ -48,7 +48,7 @@ public class EditLessorAccountsActivity extends AppCompatActivity {
         });
 
         // Check for back button being clicked
-        Button backButton = findViewById(R.id.backbutton);
+        Button backButton = findViewById(R.id.backButton);
 
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,7 +88,7 @@ public class EditLessorAccountsActivity extends AppCompatActivity {
         final View dialogView = inflater.inflate(R.layout.activity_delete_lessor_accounts, null);
         dialogBuilder.setView(dialogView);
 
-        final Button buttonDelete = (Button) dialogView.findViewById(R.id.deleteLessorButton);
+        final Button buttonDelete = dialogView.findViewById(R.id.deleteLessorButton);
 
         dialogBuilder.setTitle(username);
         final AlertDialog b = dialogBuilder.create();

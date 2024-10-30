@@ -48,7 +48,7 @@ public class EditRenterAccountsActivity extends AppCompatActivity {
         });
 
         // Check for back button being clicked
-        Button backButton = findViewById(R.id.backbutton2);
+        Button backButton = findViewById(R.id.backButton);
 
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,7 +88,7 @@ public class EditRenterAccountsActivity extends AppCompatActivity {
         final View dialogView = inflater.inflate(R.layout.activity_delete_renter_accounts, null);
         dialogBuilder.setView(dialogView);
 
-        final Button buttonDelete = (Button) dialogView.findViewById(R.id.deleteRenterButton);
+        final Button buttonDelete =  dialogView.findViewById(R.id.deleteRenterButton);
 
         dialogBuilder.setTitle(username);
         final AlertDialog b = dialogBuilder.create();
