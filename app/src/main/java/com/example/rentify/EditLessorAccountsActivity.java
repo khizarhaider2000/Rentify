@@ -25,8 +25,7 @@ public class EditLessorAccountsActivity extends AppCompatActivity {
 
     private DatabaseReference databaseReference;
     ListView lessorAccountsView;
-    private List<Lessor> lessorList;
-    private LessorAdapter lessorAdapter;
+    private List<Account> lessorList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +40,7 @@ public class EditLessorAccountsActivity extends AppCompatActivity {
         lessorAccountsView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Lessor lessor = lessorList.get(i);
+                Lessor lessor = (Lessor) lessorList.get(i);
                 showUpdateDeleteDialog(lessor.getUsername());
                 return true;
             }
@@ -71,7 +70,7 @@ public class EditLessorAccountsActivity extends AppCompatActivity {
                     Lessor lessor = snapshot.getValue(Lessor.class);
                     lessorList.add(lessor);
                 }
-                LessorAdapter lessorAdapter = new LessorAdapter(EditLessorAccountsActivity.this, lessorList);
+                AccountAdapter lessorAdapter = new AccountAdapter(EditLessorAccountsActivity.this, lessorList);
                 lessorAccountsView.setAdapter(lessorAdapter);
             }
 
@@ -85,10 +84,10 @@ public class EditLessorAccountsActivity extends AppCompatActivity {
     private void showUpdateDeleteDialog(final String username) {
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
         LayoutInflater inflater = getLayoutInflater();
-        final View dialogView = inflater.inflate(R.layout.activity_delete_lessor_accounts, null);
+        final View dialogView = inflater.inflate(R.layout.activity_delete_accounts, null);
         dialogBuilder.setView(dialogView);
 
-        final Button buttonDelete = dialogView.findViewById(R.id.deleteLessorButton);
+        final Button buttonDelete = (Button) dialogView.findViewById(R.id.deleteButton);
 
         dialogBuilder.setTitle(username);
         final AlertDialog b = dialogBuilder.create();

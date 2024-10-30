@@ -25,8 +25,7 @@ public class EditRenterAccountsActivity extends AppCompatActivity {
 
     private DatabaseReference databaseReference;
     ListView renterAccountsView;
-    private List<Renter> renterList;
-    private RenterAdapter renterAdapter;
+    private List<Account> renterList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +40,7 @@ public class EditRenterAccountsActivity extends AppCompatActivity {
         renterAccountsView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Renter renter = renterList.get(i);
+                Renter renter = (Renter) renterList.get(i);
                 showUpdateDeleteDialog(renter.getUsername(), renter.getEmail());
                 return true;
             }
@@ -71,7 +70,7 @@ public class EditRenterAccountsActivity extends AppCompatActivity {
                     Renter renter = snapshot.getValue(Renter.class);
                     renterList.add(renter);
                 }
-                RenterAdapter renterAdapter = new RenterAdapter(EditRenterAccountsActivity.this, renterList);
+                AccountAdapter renterAdapter = new AccountAdapter(EditRenterAccountsActivity.this, renterList);
                 renterAccountsView.setAdapter(renterAdapter);
             }
 
@@ -85,10 +84,10 @@ public class EditRenterAccountsActivity extends AppCompatActivity {
     private void showUpdateDeleteDialog(final String username, final String email) {
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
         LayoutInflater inflater = getLayoutInflater();
-        final View dialogView = inflater.inflate(R.layout.activity_delete_renter_accounts, null);
+        final View dialogView = inflater.inflate(R.layout.activity_delete_accounts, null);
         dialogBuilder.setView(dialogView);
 
-        final Button buttonDelete =  dialogView.findViewById(R.id.deleteRenterButton);
+        final Button buttonDelete =  dialogView.findViewById(R.id.deleteButton);
 
         dialogBuilder.setTitle(username);
         final AlertDialog b = dialogBuilder.create();

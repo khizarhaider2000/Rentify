@@ -108,7 +108,7 @@ public class RenterSignupActivity extends AppCompatActivity {
                                             dRef.child("Renters").child(enteredUsername).child("password").setValue(enteredPassword);
 
                                             // Navigate to Post Login Activity along with renter information
-                                            Toast.makeText(RenterSignupActivity.this, "Congrats on your Lessor Account", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(RenterSignupActivity.this, "Congrats on your Renter Account", Toast.LENGTH_SHORT).show();
                                             Intent intent = new Intent(RenterSignupActivity.this, PostLoginActivity.class);
                                             intent.putExtra("accountType", "Renter");
                                             intent.putExtra("username", enteredUsername);
