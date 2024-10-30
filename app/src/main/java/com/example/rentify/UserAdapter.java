@@ -9,14 +9,14 @@ import android.widget.TextView;
 
 import java.util.List;
 
-public class AccountAdapter extends ArrayAdapter<Account> {
+public class UserAdapter extends ArrayAdapter<User> {
     private Activity context;
-    private List<Account> accounts;
+    private List<User> users;
 
-    public AccountAdapter(Activity context, List<Account> accounts) {
-        super(context, R.layout.activity_account_info, accounts);
+    public UserAdapter(Activity context, List<User> users) {
+        super(context, R.layout.activity_account_info, users);
         this.context = context;
-        this.accounts = accounts;
+        this.users = users;
     }
 
     @Override
@@ -28,10 +28,10 @@ public class AccountAdapter extends ArrayAdapter<Account> {
         TextView textViewEmail = listViewItem.findViewById(R.id.emailTextView);
         TextView textViewUsername = listViewItem.findViewById(R.id.userNameTextView);
 
-        Account account = accounts.get(position);
-        textViewName.setText("Name: " + account.getFirstName() + " " + account.getLastName());
-        textViewEmail.setText("Email: " + account.getEmail());
-        textViewUsername.setText(account.getUsername());
+        User user = users.get(position);
+        textViewName.setText("Name: " + user.getFirstName() + " " + user.getLastName());
+        textViewEmail.setText("Email: " + user.getEmail());
+        textViewUsername.setText(user.getUsername());
 
         return listViewItem;
     }

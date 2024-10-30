@@ -25,7 +25,7 @@ public class EditLessorAccountsActivity extends AppCompatActivity {
 
     private DatabaseReference databaseReference;
     ListView lessorAccountsView;
-    private List<Account> lessorList;
+    private List<User> lessorList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,7 +70,7 @@ public class EditLessorAccountsActivity extends AppCompatActivity {
                     Lessor lessor = snapshot.getValue(Lessor.class);
                     lessorList.add(lessor);
                 }
-                AccountAdapter lessorAdapter = new AccountAdapter(EditLessorAccountsActivity.this, lessorList);
+                UserAdapter lessorAdapter = new UserAdapter(EditLessorAccountsActivity.this, lessorList);
                 lessorAccountsView.setAdapter(lessorAdapter);
             }
 

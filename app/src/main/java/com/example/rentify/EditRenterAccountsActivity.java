@@ -25,7 +25,7 @@ public class EditRenterAccountsActivity extends AppCompatActivity {
 
     private DatabaseReference databaseReference;
     ListView renterAccountsView;
-    private List<Account> renterList;
+    private List<User> renterList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,7 +70,7 @@ public class EditRenterAccountsActivity extends AppCompatActivity {
                     Renter renter = snapshot.getValue(Renter.class);
                     renterList.add(renter);
                 }
-                AccountAdapter renterAdapter = new AccountAdapter(EditRenterAccountsActivity.this, renterList);
+                UserAdapter renterAdapter = new UserAdapter(EditRenterAccountsActivity.this, renterList);
                 renterAccountsView.setAdapter(renterAdapter);
             }
 

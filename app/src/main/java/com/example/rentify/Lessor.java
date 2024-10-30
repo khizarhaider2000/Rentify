@@ -1,6 +1,6 @@
 package com.example.rentify;
 
-public class Lessor extends Account {
+public class Lessor extends User {
     // Default constructor required for calls to DataSnapshot.getValue(Lessor.class)
     public Lessor() {
         super();

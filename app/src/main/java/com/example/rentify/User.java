@@ -1,6 +1,6 @@
 package com.example.rentify;
 
-public class Account {
+public class User {
     private String firstName;
     private String lastName;
     private String email;
@@ -9,15 +9,15 @@ public class Account {
     private String userType;
 
     // Default constructor required for calls to DataSnapshot.getValue(User.class)
-    public Account() {}
+    public User() {}
 
-    public Account(String firstName, String lastName, String email, String password, String username, String accountType) {
+    public User(String firstName, String lastName, String email, String password, String username, String userType) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
         this.userName = username;
-        this.userType = accountType;
+        this.userType = userType;
     }
 
     // Getters and Setters
@@ -36,6 +36,6 @@ public class Account {
     public String getUsername() { return userName; }
     public void setUsername(String username) { this.userName = username; }
 
-    public String getAccountType() { return userType; }
-    public void setAccountType(String accountType) { this.userType = accountType; }
+    public String getUserType() { return userType; }
+    public void setUserType(String userType) { this.userType = userType; }
 }

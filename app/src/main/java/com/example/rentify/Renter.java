@@ -1,6 +1,6 @@
 package com.example.rentify;
 
-public class Renter extends Account {
+public class Renter extends User {
     // Default constructor required for calls to DataSnapshot.getValue(Renter.class)
     public Renter() {
         super();
