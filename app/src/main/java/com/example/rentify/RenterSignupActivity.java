@@ -101,6 +101,7 @@ public class RenterSignupActivity extends AppCompatActivity {
                                         } else {
                                             // Database reference stores all lessor information under "Lessors"
                                             dRef.child("Renters").child(enteredUsername).child("userType").setValue("Renter");
+                                            dRef.child("Renters").child(enteredUsername).child("userName").setValue(enteredUsername);
                                             dRef.child("Renters").child(enteredUsername).child("firstName").setValue(enteredFirstname);
                                             dRef.child("Renters").child(enteredUsername).child("lastName").setValue(enteredLastname);
                                             dRef.child("Renters").child(enteredUsername).child("email").setValue(enteredEmail);

@@ -43,6 +43,12 @@
             android:name=".AdminLoginActivity"
             android:exported="false" />
         <activity
+            android:name=".EditLessorAccountsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".EditRenterAccountsActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>

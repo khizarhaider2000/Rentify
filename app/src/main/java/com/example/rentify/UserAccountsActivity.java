@@ -1,5 +1,6 @@
 package com.example.rentify;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -30,6 +31,26 @@ public class UserAccountsActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 finish();
+            }
+        });
+
+        Button editLessorAccountsButton = findViewById(R.id.editLesserAccountsButton);
+
+        editLessorAccountsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(UserAccountsActivity.this, EditLessorAccountsActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        Button editRenterAccountsButton = findViewById(R.id.editRenterAccountsButton);
+
+        editRenterAccountsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(UserAccountsActivity.this, EditRenterAccountsActivity.class);
+                startActivity(intent);
             }
         });
 

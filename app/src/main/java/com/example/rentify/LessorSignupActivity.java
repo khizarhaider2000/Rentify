@@ -104,6 +104,7 @@ public class LessorSignupActivity extends AppCompatActivity {
                                         } else {
                                             // Database reference stores all lessor information under "Lessors"
                                             dRef.child("Lessors").child(enteredUsername).child("userType").setValue("Lessor");
+                                            dRef.child("Lessors").child(enteredUsername).child("userName").setValue(enteredUsername);
                                             dRef.child("Lessors").child(enteredUsername).child("firstName").setValue(enteredFirstname);
                                             dRef.child("Lessors").child(enteredUsername).child("lastName").setValue(enteredLastname);
                                             dRef.child("Lessors").child(enteredUsername).child("email").setValue(enteredEmail);

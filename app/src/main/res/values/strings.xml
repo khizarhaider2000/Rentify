@@ -25,4 +25,5 @@
     <string name="addCategoryText">Add Category</string>
     <string name="nameText">Name</string>
     <string name="descriptionText">Description</string>
+    <string name="deleteText">Delete</string>
 </resources>
