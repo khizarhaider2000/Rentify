@@ -40,5 +40,16 @@ public class CategoriesActivity extends AppCompatActivity {
             }
         });
 
+        // Button to navigate to editing/deleting category page
+        Button editButton = findViewById(R.id.editButton);
+
+        editButton.setOnClickListener(new View.OnClickListener() {
+              @Override
+              public void onClick(View view) {
+                  Intent intent = new Intent(CategoriesActivity.this, EditCategoriesActivity.class);
+                  startActivity(intent);
+              }
+        });
+
     }
 }

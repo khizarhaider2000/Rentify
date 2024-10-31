@@ -28,4 +28,7 @@
     <string name="deleteText">Delete</string>
     <string name="lessorsText">Lessors</string>
     <string name="rentersText">Renters</string>
+    <string name="editText">Edit</string>
+    <string name="editText2">Edit</string>
+    <string name="categories">Categories</string>
 </resources>
