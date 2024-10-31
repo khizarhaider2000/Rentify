@@ -71,7 +71,7 @@ public class EditCategoriesActivity extends AppCompatActivity {
                     Category category = snapshot.getValue(Category.class);
                     categoriesList.add(category);
                 }
-                UserAdapter categoryAdapter = new UserAdapter(EditCategoriesActivity.this, categoriesList);
+                CategoryAdapter categoryAdapter = new CategoryAdapter(EditCategoriesActivity.this, categoriesList);
                 categoriesView.setAdapter(categoryAdapter);
             }
 

@@ -25,24 +25,12 @@ public class CategoryAdapter extends ArrayAdapter<Category> {
         View listViewItem = inflater.inflate(R.layout.activity_category_info, null, true);
 
         TextView textViewName = listViewItem.findViewById(R.id.catNameTextView);
-        TextView textViewDescription = listViewItem.findViewById(R.id.categoryDescription);
+        TextView textViewDescription = listViewItem.findViewById(R.id.descriptionTextView);
 
 
         Category category = categories.get(position);
-        textViewUsername.setText(user.getUsername());
-
-        if (user instanceof Renter) {
-            Renter renter = (Renter) user;
-            textViewName.setText("Name: " + renter.getFirstName() + " " + renter.getLastName());
-            textViewEmail.setText("Email: " + renter.getEmail());
-        } else if (user instanceof Lessor) {
-            Lessor lessor = (Lessor) user;
-            textViewName.setText("Name: " + lessor.getFirstName() + " " + lessor.getLastName());
-            textViewEmail.setText("Email: " + lessor.getEmail());
-        } else {
-            textViewName.setText("Name: N/A");
-            textViewEmail.setText("Email: N/A");
-        }
+        textViewName.setText(category.getName());
+        textViewDescription.setText(category.getDescription());
 
         return listViewItem;
     }
