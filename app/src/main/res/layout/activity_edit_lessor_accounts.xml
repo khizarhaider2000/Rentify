@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="75dp"
-        android:fontFamily="serif"
+        android:fontFamily="@font/genghis"
         android:text="@string/lessorText"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
