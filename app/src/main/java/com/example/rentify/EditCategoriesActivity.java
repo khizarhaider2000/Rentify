@@ -25,24 +25,24 @@ import java.util.List;
 public class EditCategoriesActivity extends AppCompatActivity {
 
     private DatabaseReference databaseReference;
-    ListView CategoriesView;
-    private List<User> categoriesList;
+    ListView categoriesView;
+    private List<Category> categoriesList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.category_edit);
+        setContentView(R.layout.activity_edit_category);
 
         databaseReference = FirebaseDatabase.getInstance().getReference("Categories");
-        CategoriesView = findViewById(R.id.categoryView);
+        categoriesView = findViewById(R.id.categoryView);
         categoriesList = new ArrayList<>();
 
-        CategoriesView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+        categoriesView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
-                L lessor = (Lessor) categoriesList.get(i);
-                showUpdateDeleteDialog(lessor.getUsername());
+                Category category = (Category) categoriesList.get(i);
+                showUpdateDeleteDialog(category.getName());
                 return true;
             }
         });
@@ -68,11 +68,11 @@ public class EditCategoriesActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 categoriesList.clear(); // Clear list to avoid duplication
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    Lessor lessor = snapshot.getValue(Lessor.class);
-                    categoriesList.add(lessor);
+                    Category category = snapshot.getValue(Category.class);
+                    categoriesList.add(category);
                 }
-                UserAdapter lessorAdapter = new UserAdapter(EditCategoriesActivity.this, categoriesList);
-                lessorAccountsView.setAdapter(lessorAdapter);
+                UserAdapter categoryAdapter = new UserAdapter(EditCategoriesActivity.this, categoriesList);
+                categoriesView.setAdapter(categoryAdapter);
             }
 
             @Override
