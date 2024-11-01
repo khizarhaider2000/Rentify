@@ -8,12 +8,14 @@
         android:id="@+id/editTextCatName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/netflix"
         android:hint="Enter category name" />
 
     <EditText
         android:id="@+id/editTextDescription"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/netflix"
         android:layout_below="@id/editTextCatName"
         android:hint="Enter description" />
 
@@ -27,12 +29,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:fontFamily="@font/netflix"
             android:text="Update" />
 
         <Button
             android:id="@+id/buttonDeleteCat"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/netflix"
             android:layout_weight="1"
             android:text="Delete" />
 

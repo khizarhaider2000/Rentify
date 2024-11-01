@@ -15,6 +15,7 @@
         android:layout_marginBottom="50dp"
         android:backgroundTint="#3F51B5"
         android:padding="12dp"
+        android:fontFamily="@font/netflix"
         android:text="@string/backText"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textSize="20sp"
