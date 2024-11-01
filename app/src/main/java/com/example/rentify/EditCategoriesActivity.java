@@ -115,6 +115,8 @@ public class EditCategoriesActivity extends AppCompatActivity {
                 if (!TextUtils.isEmpty(catName)) {
                     updateCategory(categoryId,catName, description);
                     b.dismiss();
+                } else {
+                    Toast.makeText(EditCategoriesActivity.this, "Name for Category required", Toast.LENGTH_SHORT).show();
                 }
             }
         });
