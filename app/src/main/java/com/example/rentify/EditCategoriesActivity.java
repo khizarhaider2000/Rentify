@@ -1,10 +1,12 @@
 package com.example.rentify;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -42,7 +44,7 @@ public class EditCategoriesActivity extends AppCompatActivity {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Category category = (Category) categoriesList.get(i);
-                showUpdateDeleteDialog(category.getName());
+                showUpdateDeleteDialog(category.getId(),category.getCategoryName());
                 return true;
             }
         });
@@ -82,30 +84,55 @@ public class EditCategoriesActivity extends AppCompatActivity {
         });
     }
 
-    private void showUpdateDeleteDialog(final String username) {
+    private void showUpdateDeleteDialog(String categoryId,String categoryName) {
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
         LayoutInflater inflater = getLayoutInflater();
-        final View dialogView = inflater.inflate(R.layout.activity_delete_accounts, null);
+        final View dialogView = inflater.inflate(R.layout.activity_update_category, null);
         dialogBuilder.setView(dialogView);
 
-        final Button buttonDelete = (Button) dialogView.findViewById(R.id.deleteButton);
+        final EditText editTextCatName = (EditText) dialogView.findViewById(R.id.editTextCatName);
+        final EditText editTextDescription  = (EditText) dialogView.findViewById(R.id.editTextDescription);
+        final Button buttonDelete = (Button) dialogView.findViewById(R.id.buttonDeleteCat);
+        final Button buttonUpdate = (Button) dialogView.findViewById(R.id.buttonUpdateCat);
 
-        dialogBuilder.setTitle(username);
+        dialogBuilder.setTitle(categoryName);
         final AlertDialog b = dialogBuilder.create();
         b.show();
 
         buttonDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                deleteLessor(username);
+                deleteCategory(categoryId);
                 b.dismiss();
+            }
+        });
+
+        buttonUpdate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String catName = editTextCatName.getText().toString().trim();
+                String description = editTextDescription.getText().toString();
+                if (!TextUtils.isEmpty(catName)) {
+                    updateCategory(categoryId,catName, description);
+                    b.dismiss();
+                }
             }
         });
     }
 
-    private void deleteLessor(String username) {
-        DatabaseReference dR = FirebaseDatabase.getInstance().getReference("Lessors").child(username);
+    private void deleteCategory(String id) {
+        DatabaseReference dR = FirebaseDatabase.getInstance().getReference("Categories").child(id);
         dR.removeValue();
-        Toast.makeText(getApplicationContext(), "Lessor Deleted", Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(), "Category Deleted", Toast.LENGTH_LONG).show();
+    }
+
+    private void updateCategory(String categoryId, String categoryName, String descreption) {
+
+        DatabaseReference dR = FirebaseDatabase.getInstance().getReference("Categories").child(categoryId);
+
+        Category category = new Category(categoryId, categoryName, descreption);
+        dR.setValue(category);
+
+        Toast.makeText(getApplicationContext(), "NOT IMPLEMENTED YET", Toast.LENGTH_LONG).show();
     }
 }

@@ -67,13 +67,15 @@ public class AddCategoryActivity extends AppCompatActivity {
                 } else if (!(isAlpha(enteredCategoryName))) {
                     Toast.makeText(AddCategoryActivity.this, "Name of category must only be of letters", Toast.LENGTH_SHORT).show();
                 } else {
-                    dRef.child("Categories").child(enteredCategoryName).addListenerForSingleValueEvent(new ValueEventListener() {
+                    String id = FirebaseDatabase.getInstance().getReference("Categories").push().getKey();
+                    dRef.child("Categories").child(id).child(enteredCategoryName).addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot snapshot) {
                             if (snapshot.exists()) {
                                 Toast.makeText(AddCategoryActivity.this, "Category already exists", Toast.LENGTH_SHORT).show();
                             } else {
-                                dRef.child("Categories").child(enteredCategoryName).child("description").setValue(enteredCategoryDescription);
+                                Category category = new Category(id, enteredCategoryName, enteredCategoryDescription);
+                                dRef.child("Categories").child(id).setValue(category);
 
                                 Toast.makeText(AddCategoryActivity.this, "Category created", Toast.LENGTH_SHORT).show();
                                 finish();

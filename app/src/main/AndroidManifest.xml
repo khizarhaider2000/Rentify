@@ -49,6 +49,10 @@
             android:name=".EditRenterAccountsActivity"
             android:exported="false" />
         <activity
+            android:name=".EditCategoriesActivity"
+            android:exported="false" />
+
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
