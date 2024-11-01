@@ -127,12 +127,36 @@ public class EditCategoriesActivity extends AppCompatActivity {
     }
 
     private void updateCategory(String categoryId, String categoryName, String descreption) {
-
         DatabaseReference dR = FirebaseDatabase.getInstance().getReference("Categories").child(categoryId);
 
-        Category category = new Category(categoryId, categoryName, descreption);
-        dR.setValue(category);
+        FirebaseDatabase.getInstance().getReference().child("Categories").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                boolean exists = false;
 
-        Toast.makeText(getApplicationContext(), "NOT IMPLEMENTED YET", Toast.LENGTH_LONG).show();
+                for (DataSnapshot categorySnapshot : dataSnapshot.getChildren()) {
+                    String existingCategoryName = categorySnapshot.child("categoryName").getValue(String.class);
+
+                    if (categoryName.equalsIgnoreCase(existingCategoryName)) {
+                        exists = true;
+                        break;
+                    }
+                }
+
+                if (exists) {
+                    Toast.makeText(EditCategoriesActivity.this, "Category already exists", Toast.LENGTH_SHORT).show();
+                } else {
+                    Category category = new Category(categoryId, categoryName, descreption);
+                    dR.setValue(category);
+
+                    Toast.makeText(getApplicationContext(), "Updated Category", Toast.LENGTH_LONG).show();
+                    finish();
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Toast.makeText(EditCategoriesActivity.this, "Database error: " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

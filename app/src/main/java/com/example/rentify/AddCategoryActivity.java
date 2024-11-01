@@ -68,10 +68,22 @@ public class AddCategoryActivity extends AppCompatActivity {
                     Toast.makeText(AddCategoryActivity.this, "Name of category must only be of letters", Toast.LENGTH_SHORT).show();
                 } else {
                     String id = FirebaseDatabase.getInstance().getReference("Categories").push().getKey();
-                    dRef.child("Categories").child(id).child(enteredCategoryName).addListenerForSingleValueEvent(new ValueEventListener() {
+
+                    dRef.child("Categories").addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
-                        public void onDataChange(DataSnapshot snapshot) {
-                            if (snapshot.exists()) {
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            boolean exists = false;
+
+                            for (DataSnapshot categorySnapshot : dataSnapshot.getChildren()) {
+                                String existingCategoryName = categorySnapshot.child("categoryName").getValue(String.class);
+
+                                if (enteredCategoryName.equalsIgnoreCase(existingCategoryName)) {
+                                    exists = true;
+                                    break;
+                                }
+                            }
+
+                            if (exists) {
                                 Toast.makeText(AddCategoryActivity.this, "Category already exists", Toast.LENGTH_SHORT).show();
                             } else {
                                 Category category = new Category(id, enteredCategoryName, enteredCategoryDescription);
@@ -80,7 +92,9 @@ public class AddCategoryActivity extends AppCompatActivity {
                                 Toast.makeText(AddCategoryActivity.this, "Category created", Toast.LENGTH_SHORT).show();
                                 finish();
                             }
+
                         }
+
                         @Override
                         public void onCancelled(DatabaseError databaseError) {
                             Toast.makeText(AddCategoryActivity.this, "Database error: " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
