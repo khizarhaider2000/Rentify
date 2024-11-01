@@ -16,11 +16,6 @@ public class Category {
         this.description = description;
     }
 
-    /*public Category(String categoryName, String description) {
-        this.categoryName = categoryName;
-        this.description = description;
-    }*/
-
     // Getters and Setters
     public String getId() {
         return id;

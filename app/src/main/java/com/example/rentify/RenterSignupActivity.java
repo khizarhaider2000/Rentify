@@ -80,9 +80,9 @@ public class RenterSignupActivity extends AppCompatActivity {
                     Toast.makeText(RenterSignupActivity.this, "All text fields must be filled", Toast.LENGTH_SHORT).show();
                 } else if (!(isAlpha(enteredFirstname)) || !(isAlpha(enteredLastname))) {
                     Toast.makeText(RenterSignupActivity.this, "Username & Lastname must only be of letters", Toast.LENGTH_SHORT).show();
-                } else if (enteredUsername.contains(".")) {
-                    Toast.makeText(RenterSignupActivity.this, "Username cannot have symbols", Toast.LENGTH_SHORT).show();
-                }else if (!(isValidEmailAddress(enteredEmail))){
+                } else if (!enteredUsername.matches("[a-zA-Z0-9]*")) {
+                    Toast.makeText(RenterSignupActivity.this, "Username can not have spaces or special characters", Toast.LENGTH_SHORT).show();
+                }  else if (!(isValidEmailAddress(enteredEmail))){
                     Toast.makeText(RenterSignupActivity.this, "Invalid Email!", Toast.LENGTH_SHORT).show();
                 } else if (enteredPassword.length() < 6) {
                     Toast.makeText(RenterSignupActivity.this, "Password must be 6 or more characters", Toast.LENGTH_SHORT).show();

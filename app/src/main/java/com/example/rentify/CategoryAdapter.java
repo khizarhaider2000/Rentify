@@ -13,12 +13,14 @@ public class CategoryAdapter extends ArrayAdapter<Category> {
     private Activity context;
     private List<Category> categories;
 
+    // Constructor
     public CategoryAdapter(Activity context, List<Category> categories) {
         super(context, R.layout.activity_category_info, categories);
         this.context = context;
         this.categories = categories;
     }
 
+    // List view item to display category information
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = context.getLayoutInflater();

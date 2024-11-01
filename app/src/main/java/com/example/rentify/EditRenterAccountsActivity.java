@@ -37,6 +37,7 @@ public class EditRenterAccountsActivity extends AppCompatActivity {
         renterAccountsView = findViewById(R.id.renterAccountsView);
         renterList = new ArrayList<>();
 
+        // Check if any items (renters) in the listview are long clicked
         renterAccountsView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -59,6 +60,7 @@ public class EditRenterAccountsActivity extends AppCompatActivity {
 
     }
 
+    // Displays list of renters
     @Override
     protected void onStart() {
         super.onStart();
@@ -76,11 +78,12 @@ public class EditRenterAccountsActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                // Handle potential errors
+                Toast.makeText(EditRenterAccountsActivity.this, "Database error: " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
 
+    // Updates the list of renters shown
     private void showUpdateDeleteDialog(final String username, final String email) {
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
         LayoutInflater inflater = getLayoutInflater();
@@ -102,6 +105,7 @@ public class EditRenterAccountsActivity extends AppCompatActivity {
         });
     }
 
+    // Removes renter from database
     private void deleteRenter(String username, String email) {
         DatabaseReference dR = FirebaseDatabase.getInstance().getReference("Renters").child(username);
         dR.removeValue();

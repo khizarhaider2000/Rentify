@@ -52,12 +52,12 @@ public class LoginActivity extends AppCompatActivity {
             }
 
             if (!enteredUsername.matches("[a-zA-Z0-9]*")) {
-                UsernameInput.setError("Username cannot have symbols");
+                UsernameInput.setError("Username can not have spaces or special characters");
                 UsernameInput.requestFocus();
                 return;
             }
 
-            if (enteredPassword.isEmpty()) {
+            else if (enteredPassword.isEmpty()) {
                 PasswordInput.setError("Password is required");
                 PasswordInput.requestFocus();
                 return;

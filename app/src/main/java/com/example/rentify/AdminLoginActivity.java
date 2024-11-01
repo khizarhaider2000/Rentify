@@ -44,7 +44,7 @@ public class AdminLoginActivity extends AppCompatActivity {
                 String enteredPassword = PasswordInput.getText().toString();
 
                 // Check if the entered inputs match the admin username and password
-                // If successful, navigate to Post Login Activity
+                // If successful, navigate to Admin Post Login Activity
                 if (enteredUsername.equals(admin.getUsername()) && enteredPassword.equals(admin.getPassword())) {
                     Toast.makeText(AdminLoginActivity.this, "Admin logged in!", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(AdminLoginActivity.this, AdminPostLoginActivity.class);
