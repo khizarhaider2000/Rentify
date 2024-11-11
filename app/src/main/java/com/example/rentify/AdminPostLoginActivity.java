@@ -31,9 +31,6 @@ public class AdminPostLoginActivity extends AppCompatActivity {
         logoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                Toast.makeText(AdminPostLoginActivity.this, "Admin logged out!", Toast.LENGTH_SHORT).show();
-                startActivity(intent);
                 finish();
             }
         });

@@ -31,44 +31,45 @@
         android:layout_weight="2"
         android:backgroundTint="#3F51B5"
         android:padding="12dp"
-        android:fontFamily="@font/netflix"
         android:text="@string/backText"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <Button
-        android:id="@+id/addButton"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="150dp"
-        android:layout_marginTop="225dp"
-        android:layout_weight="2"
-        android:backgroundTint="#3F51B5"
-        android:padding="12dp"
-        android:fontFamily="@font/netflix"
-        android:text="@string/addText"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        android:textSize="20sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_marginHorizontal="100dp"
+        android:layout_marginTop="275dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="100dp">
 
-    <Button
-        android:id="@+id/editButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="150dp"
-        android:layout_marginTop="350dp"
-        android:layout_weight="2"
-        android:backgroundTint="#3F51B5"
-        android:fontFamily="@font/netflix"
-        android:padding="12dp"
-        android:text="@string/editText2"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        android:textSize="20sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <Button
+            android:id="@+id/addButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:backgroundTint="#3F51B5"
+            android:padding="12dp"
+            android:text="@string/addText"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textSize="20sp" />
+
+        <Button
+            android:id="@+id/editButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:layout_weight="2"
+            android:backgroundTint="#3F51B5"
+            android:padding="12dp"
+            android:text="@string/editText2"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textSize="20sp" />
+    </LinearLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

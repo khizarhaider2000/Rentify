@@ -8,9 +8,6 @@ import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -22,6 +19,7 @@ public class AddCategoryActivity extends AppCompatActivity {
 
     DatabaseReference dRef;
 
+    // Validates if input contains alphabets only
     public boolean isAlpha(String name) {
         char[] chars = name.toCharArray();
         for (char c : chars) {
@@ -55,6 +53,7 @@ public class AddCategoryActivity extends AppCompatActivity {
         EditText categoryDescription = findViewById(R.id.categoryDescription);
         Button addCategoryButton = findViewById(R.id.addCategoryButton);
 
+        // Add category button that adds a Category object to the database with a unique id
         addCategoryButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -63,13 +62,16 @@ public class AddCategoryActivity extends AppCompatActivity {
                 String enteredCategoryDescription = categoryDescription.getText().toString();
 
                 if ((enteredCategoryName.isEmpty()) || (enteredCategoryDescription.isEmpty())) {
-                    Toast.makeText(AddCategoryActivity.this, "All text fields must be filled", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddCategoryActivity.this, "Name and Description for Category required", Toast.LENGTH_SHORT).show();
                 } else if (!(isAlpha(enteredCategoryName))) {
                     Toast.makeText(AddCategoryActivity.this, "Name of category must only be of letters", Toast.LENGTH_SHORT).show();
                 } else {
                     String id = FirebaseDatabase.getInstance().getReference("Categories").push().getKey();
 
                     dRef.child("Categories").addListenerForSingleValueEvent(new ValueEventListener() {
+
+                        // Check if a category name already exists in database
+                        // If not, adds Category to database
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
                             boolean exists = false;

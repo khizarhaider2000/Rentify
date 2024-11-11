@@ -40,6 +40,7 @@ public class EditCategoriesActivity extends AppCompatActivity {
         categoriesView = findViewById(R.id.categoryView);
         categoriesList = new ArrayList<>();
 
+        // Check if any items (categories) in the listview are long clicked
         categoriesView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -62,6 +63,7 @@ public class EditCategoriesActivity extends AppCompatActivity {
 
     }
 
+    // Displays list of categories
     @Override
     protected void onStart() {
         super.onStart();
@@ -79,11 +81,12 @@ public class EditCategoriesActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                // Handle potential errors
+                Toast.makeText(EditCategoriesActivity.this, "Database error: " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
 
+    // Updates the list of categories shown
     private void showUpdateDeleteDialog(String categoryId,String categoryName) {
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
         LayoutInflater inflater = getLayoutInflater();
@@ -112,23 +115,25 @@ public class EditCategoriesActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String catName = editTextCatName.getText().toString().trim();
                 String description = editTextDescription.getText().toString();
-                if (!TextUtils.isEmpty(catName)) {
+                if (!TextUtils.isEmpty(catName) && !TextUtils.isEmpty(description)) {
                     updateCategory(categoryId,catName, description);
                     b.dismiss();
                 } else {
-                    Toast.makeText(EditCategoriesActivity.this, "Name for Category required", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(EditCategoriesActivity.this, "Name and Description for Category required", Toast.LENGTH_SHORT).show();
                 }
             }
         });
     }
 
+    // Removes category from database
     private void deleteCategory(String id) {
         DatabaseReference dR = FirebaseDatabase.getInstance().getReference("Categories").child(id);
         dR.removeValue();
         Toast.makeText(getApplicationContext(), "Category Deleted", Toast.LENGTH_LONG).show();
     }
 
-    private void updateCategory(String categoryId, String categoryName, String descreption) {
+    // Updates category information in database
+    private void updateCategory(String categoryId, String categoryName, String description) {
         DatabaseReference dR = FirebaseDatabase.getInstance().getReference("Categories").child(categoryId);
 
         FirebaseDatabase.getInstance().getReference().child("Categories").addListenerForSingleValueEvent(new ValueEventListener() {
@@ -136,10 +141,13 @@ public class EditCategoriesActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 boolean exists = false;
 
+                // Check if there exists another category with the same category name
+                // If not, update category
                 for (DataSnapshot categorySnapshot : dataSnapshot.getChildren()) {
                     String existingCategoryName = categorySnapshot.child("categoryName").getValue(String.class);
+                    String existingCategoryId = categorySnapshot.child("id").getValue(String.class);
 
-                    if (categoryName.equalsIgnoreCase(existingCategoryName)) {
+                    if (categoryName.equalsIgnoreCase(existingCategoryName) && !(categoryId.equals(existingCategoryId))) {
                         exists = true;
                         break;
                     }
@@ -148,11 +156,10 @@ public class EditCategoriesActivity extends AppCompatActivity {
                 if (exists) {
                     Toast.makeText(EditCategoriesActivity.this, "Category already exists", Toast.LENGTH_SHORT).show();
                 } else {
-                    Category category = new Category(categoryId, categoryName, descreption);
+                    Category category = new Category(categoryId, categoryName, description);
                     dR.setValue(category);
 
                     Toast.makeText(getApplicationContext(), "Updated Category", Toast.LENGTH_LONG).show();
-                    finish();
                 }
             }
             @Override

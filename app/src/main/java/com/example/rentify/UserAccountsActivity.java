@@ -34,6 +34,8 @@ public class UserAccountsActivity extends AppCompatActivity {
             }
         });
 
+        // Listen for lessor accounts button being clicked
+        // If clicked, navigate to page with all lessor accounts information
         Button editLessorAccountsButton = findViewById(R.id.editLesserAccountsButton);
 
         editLessorAccountsButton.setOnClickListener(new View.OnClickListener() {
@@ -44,6 +46,8 @@ public class UserAccountsActivity extends AppCompatActivity {
             }
         });
 
+        // Listen for renter accounts button being clicked
+        // If clicked, navigate to page with all renter accounts information
         Button editRenterAccountsButton = findViewById(R.id.editRenterAccountsButton);
 
         editRenterAccountsButton.setOnClickListener(new View.OnClickListener() {

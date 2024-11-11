@@ -13,12 +13,14 @@ public class UserAdapter extends ArrayAdapter<User> {
     private Activity context;
     private List<User> users;
 
+    // Constructor
     public UserAdapter(Activity context, List<User> users) {
         super(context, R.layout.activity_account_info, users);
         this.context = context;
         this.users = users;
     }
 
+    // List view item to display user information
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = context.getLayoutInflater();

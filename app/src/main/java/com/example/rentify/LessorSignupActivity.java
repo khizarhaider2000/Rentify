@@ -83,10 +83,10 @@ public class LessorSignupActivity extends AppCompatActivity {
                     Toast.makeText(LessorSignupActivity.this, "All text fields must be filled", Toast.LENGTH_SHORT).show();
                 } else if (!(isAlpha(enteredFirstname)) || !(isAlpha(enteredLastname))) {
                     Toast.makeText(LessorSignupActivity.this, "Firstname & Lastname must only be of letters", Toast.LENGTH_SHORT).show();
-                } else if (!(isValidEmailAddress(enteredEmail))){
+                } else if (!enteredUsername.matches("[a-zA-Z0-9]*")) {
+                    Toast.makeText(LessorSignupActivity.this, "Username can not have spaces or special characters", Toast.LENGTH_SHORT).show();
+                } else if (!(isValidEmailAddress(enteredEmail))) {
                     Toast.makeText(LessorSignupActivity.this, "Invalid Email!", Toast.LENGTH_SHORT).show();
-                } else if (enteredUsername.contains(".")) {
-                    Toast.makeText(LessorSignupActivity.this, "Username cannot have symbols", Toast.LENGTH_SHORT).show();
                 } else if (enteredPassword.length() < 6) {
                     Toast.makeText(LessorSignupActivity.this, "Password must be 6 or more characters", Toast.LENGTH_SHORT).show();
                 } else {

@@ -8,16 +8,14 @@
         android:id="@+id/editTextCatName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/netflix"
-        android:hint="Enter category name" />
+        android:hint="@string/categoryName" />
 
     <EditText
         android:id="@+id/editTextDescription"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/netflix"
         android:layout_below="@id/editTextCatName"
-        android:hint="Enter description" />
+        android:hint="@string/descriptionText" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -28,17 +26,23 @@
             android:id="@+id/buttonUpdateCat"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:fontFamily="@font/netflix"
-            android:text="Update" />
+            android:layout_weight="2"
+            android:backgroundTint="#3F51B5"
+            android:padding="12dp"
+            android:text="@string/updateText"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textSize="20sp" />
 
         <Button
             android:id="@+id/buttonDeleteCat"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/netflix"
-            android:layout_weight="1"
-            android:text="Delete" />
+            android:layout_weight="2"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textSize="20sp"
+            android:backgroundTint="#3F51B5"
+            android:padding="12dp"
+            android:text="@string/deleteText" />
 
     </LinearLayout>
 

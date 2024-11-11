@@ -37,6 +37,7 @@ public class EditLessorAccountsActivity extends AppCompatActivity {
         lessorAccountsView = findViewById(R.id.lessorAccountsView);
         lessorList = new ArrayList<>();
 
+        // Check if any items (lessors) in the listview are long clicked
         lessorAccountsView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -59,6 +60,7 @@ public class EditLessorAccountsActivity extends AppCompatActivity {
 
     }
 
+    // Displays list of lessors
     @Override
     protected void onStart() {
         super.onStart();
@@ -76,11 +78,12 @@ public class EditLessorAccountsActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                // Handle potential errors
+                Toast.makeText(EditLessorAccountsActivity.this, "Database error: " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
 
+    // Updates the list of lessors shown
     private void showUpdateDeleteDialog(final String username) {
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
         LayoutInflater inflater = getLayoutInflater();
@@ -102,6 +105,7 @@ public class EditLessorAccountsActivity extends AppCompatActivity {
         });
     }
 
+    // Removes lessor from database
     private void deleteLessor(String username) {
         DatabaseReference dR = FirebaseDatabase.getInstance().getReference("Lessors").child(username);
         dR.removeValue();
