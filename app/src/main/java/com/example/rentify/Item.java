@@ -28,7 +28,7 @@ public class Item {
     public void setDescription(String description) { this.description = description; }
 
     public int getFee() { return fee; }
-    public void setFee(int cost) { this.fee = fee; }
+    public void setFee(int fee) { this.fee = fee; }
 
     public int getTimePeriod() { return timePeriod; }
     public void setTimePeriod(int timePeriod) { this.timePeriod = timePeriod; }

@@ -36,7 +36,7 @@ public class ItemAdapter extends ArrayAdapter<Item> {
 
         textViewName.setText("Item Name: " + item.getItemName());
         textViewDescription.setText("Description: " + item.getDescription());
-        textViewFee.setText("Fee: " + item.getFee());
+        textViewFee.setText("Fee: $" + item.getFee());
         textViewCategory.setText("Category: " + item.getCategory());
         textViewTime.setText("Time Period: " + item.getTimePeriod());
 

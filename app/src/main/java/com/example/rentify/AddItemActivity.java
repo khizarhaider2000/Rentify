@@ -91,6 +91,7 @@ public class AddItemActivity extends AppCompatActivity {
                 } else {
                     dRef.child("Categories").addListenerForSingleValueEvent(new ValueEventListener() {
 
+                        String validCategory;
                         // Check if a category name already exists in database
                         // If not, adds Category to database
                         @Override
@@ -102,6 +103,7 @@ public class AddItemActivity extends AppCompatActivity {
 
                                 if (enteredCategory.equalsIgnoreCase(existingCategoryName)) {
                                     exists = true;
+                                    validCategory = existingCategoryName;
                                     break;
                                 }
                             }
@@ -109,7 +111,8 @@ public class AddItemActivity extends AppCompatActivity {
                             if (!(exists)) {
                                 Toast.makeText(AddItemActivity.this, "Category does not exists", Toast.LENGTH_SHORT).show();
                             } else {
-                                Item item = new Item(enteredItemName, enteredCategory, enteredDescription, Integer.parseInt(enteredCost), Integer.parseInt(enteredTime));
+                                int cost = Integer.parseInt(enteredCost);
+                                Item item = new Item(enteredItemName, validCategory, enteredDescription, cost, Integer.parseInt(enteredTime));
                                 dRef.child("Lessors").child(username).child("Items").child(enteredItemName).setValue(item);
 
                                 Toast.makeText(AddItemActivity.this, "Item added", Toast.LENGTH_SHORT).show();
