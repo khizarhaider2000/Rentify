@@ -79,7 +79,7 @@ public class LoginActivity extends AppCompatActivity {
                     String storedPassword = dataSnapshot.child("password").getValue(String.class);
                     if (storedPassword != null && storedPassword.equals(password)) {
                         Toast.makeText(LoginActivity.this, "Welcome back, " + username, Toast.LENGTH_SHORT).show();
-                        navigateToPostLogin(username, "Lessor", PostLessorLoginActivity.class);
+                        navigateToPostLogin(username, "Lessor", LessorPostLoginActivity.class);
                     } else {
                         Toast.makeText(LoginActivity.this, "Incorrect password. Please try again.", Toast.LENGTH_SHORT).show();
                     }
@@ -106,7 +106,7 @@ public class LoginActivity extends AppCompatActivity {
                     String storedPassword = dataSnapshot.child("password").getValue(String.class);
                     if (storedPassword != null && storedPassword.equals(password)) {
                         Toast.makeText(LoginActivity.this, "Welcome back, " + username, Toast.LENGTH_SHORT).show();
-                        navigateToPostLogin(username, "Renter", PostRenterLoginActivity.class);
+                        navigateToPostLogin(username, "Renter", RenterPostLoginActivity.class);
                     } else {
                         Toast.makeText(LoginActivity.this, "Incorrect password. Please try again.", Toast.LENGTH_SHORT).show();
                     }

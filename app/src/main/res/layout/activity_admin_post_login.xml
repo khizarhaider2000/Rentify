@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/login_background"
-    tools:context=".PostLessorLoginActivity">
+    tools:context=".AdminPostLoginActivity">
 
     <Button
         android:id="@+id/logoutButton"
@@ -30,7 +30,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
         android:layout_marginTop="75dp"
-        android:fontFamily="serif"
+        android:fontFamily="@font/netflix"
         android:text="@string/welcomeText"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
@@ -44,9 +44,9 @@
         android:id="@+id/usernameText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="173dp"
+        android:layout_marginStart="168dp"
         android:layout_marginTop="75dp"
-        android:fontFamily="serif"
+        android:fontFamily="@font/netflix"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textColor="@color/white"
@@ -59,9 +59,9 @@
         android:id="@+id/accountTypeText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="180dp"
+        android:layout_marginStart="179dp"
         android:layout_marginTop="120dp"
-        android:fontFamily="serif"
+        android:fontFamily="@font/netflix"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textColor="@color/white"
@@ -71,12 +71,12 @@
         tools:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/loggedInMesage"
+        android:id="@+id/loggedInMessage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
         android:layout_marginTop="120dp"
-        android:fontFamily="serif"
+        android:fontFamily="@font/netflix"
         android:text="@string/loggedInText"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"

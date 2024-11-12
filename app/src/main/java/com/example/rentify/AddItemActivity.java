@@ -15,7 +15,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-public class AddLessorItemActivity extends AppCompatActivity {
+public class AddItemActivity extends AppCompatActivity {
 
     DatabaseReference dRef;
 
@@ -50,7 +50,7 @@ public class AddLessorItemActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_add_lessor_item);
+        setContentView(R.layout.activity_add_item);
 
         // Check for back button being clicked
         Button backButton = findViewById(R.id.backButton2);
@@ -81,13 +81,13 @@ public class AddLessorItemActivity extends AppCompatActivity {
                 String enteredTime = itemTimePeriod.getText().toString();
 
                 if ((enteredItemName.isEmpty()) || (enteredDescription.isEmpty()) || (enteredItemName.isEmpty()) || (enteredTime.isEmpty())) {
-                    Toast.makeText(AddLessorItemActivity.this, "Name, Description and Cost for Item required", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddItemActivity.this, "Name, Description and Cost for Item required", Toast.LENGTH_SHORT).show();
                 } else if (!(isNumeric(enteredCost))) {
-                    Toast.makeText(AddLessorItemActivity.this, "Cost must be a number", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddItemActivity.this, "Cost must be a number", Toast.LENGTH_SHORT).show();
                 } else if (!(isNumeric(enteredTime))) {
-                    Toast.makeText(AddLessorItemActivity.this, "Time Period must be a number", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddItemActivity.this, "Time Period must be a number", Toast.LENGTH_SHORT).show();
                 } else if (!(isAlpha(enteredItemName))) {
-                    Toast.makeText(AddLessorItemActivity.this, "Name of item must only be of letters", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddItemActivity.this, "Name of item must only be of letters", Toast.LENGTH_SHORT).show();
                 } else {
                     dRef.child("Categories").addListenerForSingleValueEvent(new ValueEventListener() {
 
@@ -107,12 +107,12 @@ public class AddLessorItemActivity extends AppCompatActivity {
                             }
 
                             if (!(exists)) {
-                                Toast.makeText(AddLessorItemActivity.this, "Category does not exists", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(AddItemActivity.this, "Category does not exists", Toast.LENGTH_SHORT).show();
                             } else {
                                 Item item = new Item(enteredItemName, enteredCategory, enteredDescription, Integer.parseInt(enteredCost), Integer.parseInt(enteredTime));
                                 dRef.child("Lessors").child(username).child("Items").child(enteredItemName).setValue(item);
 
-                                Toast.makeText(AddLessorItemActivity.this, "Item added", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(AddItemActivity.this, "Item added", Toast.LENGTH_SHORT).show();
                                 finish();
                             }
 
@@ -120,7 +120,7 @@ public class AddLessorItemActivity extends AppCompatActivity {
 
                         @Override
                         public void onCancelled(DatabaseError databaseError) {
-                            Toast.makeText(AddLessorItemActivity.this, "Database error: " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(AddItemActivity.this, "Database error: " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     });
                 }

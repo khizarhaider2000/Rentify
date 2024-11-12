@@ -31,6 +31,7 @@ public class AdminPostLoginActivity extends AppCompatActivity {
         logoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Toast.makeText(AdminPostLoginActivity.this, "Logged out successfully", Toast.LENGTH_SHORT).show();
                 finish();
             }
         });

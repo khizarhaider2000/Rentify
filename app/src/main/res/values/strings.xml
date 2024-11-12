@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Rentify</string>
     <string name="loginText">Login</string>
-    <string name="signupText">Sign up</string>
+    <string name="signupText">Signup</string>
     <string name="adminLoginText">Admin Login</string>
     <string name="userLoginText">User Login</string>
     <string name="usernameText">Username</string>
