@@ -19,11 +19,12 @@ public class AddCategoryActivity extends AppCompatActivity {
 
     DatabaseReference dRef;
 
-    // Validates if input contains alphabets only
-    public boolean isAlpha(String name) {
-        char[] chars = name.toCharArray();
+    // Validates if input contains alphabets only (allowed to have spaces in between alphabets)
+    private boolean isAlpha(String name) {
+        String nameCleaned = name.strip();
+        char[] chars = nameCleaned.toCharArray();
         for (char c : chars) {
-            if(!Character.isLetter(c)) {
+            if ((!Character.isLetter(c)) && (!Character.isWhitespace(c))) {
                 return false;
             }
         }

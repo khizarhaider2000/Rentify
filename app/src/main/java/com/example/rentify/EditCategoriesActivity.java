@@ -30,6 +30,18 @@ public class EditCategoriesActivity extends AppCompatActivity {
     ListView categoriesView;
     private List<Category> categoriesList;
 
+    // Validates if input contains alphabets only (allowed to have spaces in between alphabets)
+    private boolean isAlpha(String name) {
+        String nameCleaned = name.strip();
+        char[] chars = nameCleaned.toCharArray();
+        for (char c : chars) {
+            if ((!Character.isLetter(c)) && (!Character.isWhitespace(c))) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -115,11 +127,15 @@ public class EditCategoriesActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String catName = editTextCatName.getText().toString().trim();
                 String description = editTextDescription.getText().toString();
-                if (!TextUtils.isEmpty(catName) && !TextUtils.isEmpty(description)) {
+
+                if ((catName.isEmpty()) || (description.isEmpty())) {
+                    Toast.makeText(EditCategoriesActivity.this, "Name and Description for Category required", Toast.LENGTH_SHORT).show();
+                } else if (!(isAlpha(catName))) {
+                    Toast.makeText(EditCategoriesActivity.this, "Name of category must only be of letters", Toast.LENGTH_SHORT).show();
+                }
+                else {
                     updateCategory(categoryId,catName, description);
                     b.dismiss();
-                } else {
-                    Toast.makeText(EditCategoriesActivity.this, "Name and Description for Category required", Toast.LENGTH_SHORT).show();
                 }
             }
         });

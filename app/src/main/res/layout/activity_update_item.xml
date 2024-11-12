@@ -15,28 +15,43 @@
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:layout_below="@id/editTextItemName"
-        android:hint="@string/feeText" />
+        android:hint="@string/feeText"
+        android:inputType="numberDecimal" />
 
-    <EditText
-        android:id="@+id/editTextCategory"
+    <TextView
+        android:id="@+id/textView"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:layout_below="@id/editTextItemName"
-        android:hint="@string/categoryText" />
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="10dp"
+        android:text="@string/categoryText"
+        android:textColor="@color/material_dynamic_neutral60"
+        android:textSize="19sp" />
+
+    <Spinner
+        android:id="@+id/categorySpinner"
+        android:layout_width="match_parent"
+        android:layout_height="36dp" />
 
     <EditText
         android:id="@+id/editTextTimePeriod"
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:layout_below="@id/editTextItemName"
-        android:hint="@string/timePeriodText" />
+        android:hint="@string/timePeriodWeeksText"
+        android:inputType="number" />
 
     <EditText
         android:id="@+id/editTextDescription"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
+        android:layout_height="wrap_content"
         android:layout_below="@id/editTextItemName"
-        android:hint="@string/descriptionText" />
+        android:fadeScrollbars="false"
+        android:hint="@string/descriptionText"
+        android:inputType="textMultiLine"
+        android:maxLines="7"
+        android:overScrollMode="always"
+        android:scrollbars="vertical" />
 
     <LinearLayout
         android:layout_width="match_parent"

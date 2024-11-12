@@ -5,9 +5,11 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -27,9 +29,21 @@ import java.util.List;
 public class EditItemsActivity extends AppCompatActivity {
 
     private DatabaseReference databaseReference;
+    DatabaseReference dRef;
     ListView lessorItemsListView;
     private List<Item> lessorItemList;
 
+    // Validates if input contains alphabets only (allowed to have spaces in between alphabets)
+    private boolean isAlpha(String name) {
+        String nameCleaned = name.strip();
+        char[] chars = nameCleaned.toCharArray();
+        for (char c : chars) {
+            if ((!Character.isLetter(c)) && (!Character.isWhitespace(c))) {
+                return false;
+            }
+        }
+        return true;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,9 +109,11 @@ public class EditItemsActivity extends AppCompatActivity {
         final View dialogView = inflater.inflate(R.layout.activity_update_item, null);
         dialogBuilder.setView(dialogView);
 
+        dRef = FirebaseDatabase.getInstance().getReference();
+
         final EditText editTextItemName = (EditText) dialogView.findViewById(R.id.editTextItemName);
         final EditText editTextItemFee = (EditText) dialogView.findViewById(R.id.editTextFee);
-        final EditText editTextItemCategory = (EditText) dialogView.findViewById(R.id.editTextCategory);
+        Spinner categorySpinner = dialogView.findViewById(R.id.categorySpinner);
         final EditText editTextItemTimePeriod = (EditText) dialogView.findViewById(R.id.editTextTimePeriod);
         final EditText editTextDescription = (EditText) dialogView.findViewById(R.id.editTextDescription);
         final Button buttonDelete = (Button) dialogView.findViewById(R.id.buttonDeleteItem);
@@ -107,6 +123,26 @@ public class EditItemsActivity extends AppCompatActivity {
         final AlertDialog b = dialogBuilder.create();
         b.show();
 
+        ArrayList<String> categories = new ArrayList<String>();
+        dRef.child("Categories").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                for (DataSnapshot categorySnapshot : dataSnapshot.getChildren()) {
+                    String existingCategoryName = categorySnapshot.child("categoryName").getValue(String.class);
+                    categories.add(existingCategoryName);
+                }
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(EditItemsActivity.this, android.R.layout.simple_spinner_item, categories);
+                adapter.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
+                categorySpinner.setAdapter(adapter);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Toast.makeText(EditItemsActivity.this, "Database error: " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
         buttonDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -115,31 +151,67 @@ public class EditItemsActivity extends AppCompatActivity {
             }
         });
 
+        categorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                String category = adapterView.getItemAtPosition(i).toString();
+                buttonUpdate.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        String enteredItemName = editTextItemName.getText().toString().trim();
+                        String enteredFee = editTextItemFee.getText().toString().trim();
+                        String enteredTime = editTextItemTimePeriod.getText().toString().trim();
+                        String enteredDescription = editTextDescription.getText().toString();
 
-//        buttonUpdate.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                String catName = editTextCatName.getText().toString().trim();
-//                String description = editTextDescription.getText().toString();
-//                if (!TextUtils.isEmpty(catName) && !TextUtils.isEmpty(description)) {
-//                    updateCategory(categoryId,catName, description);
-//                    b.dismiss();
-//                } else {
-//                    Toast.makeText(EditCategoriesActivity.this, "Name and Description for Category required", Toast.LENGTH_SHORT).show();
-//                }
-//            }
-//        });
+                        if ((enteredItemName.isEmpty()) || (enteredDescription.isEmpty()) || (enteredFee.isEmpty()) || (enteredTime.isEmpty())) {
+                            Toast.makeText(EditItemsActivity.this, "Name, Description, Cost and Time Period for Item required", Toast.LENGTH_SHORT).show();
+                        } else if (!(isAlpha(enteredItemName))) {
+                            Toast.makeText(EditItemsActivity.this, "Name of item must only be of letters", Toast.LENGTH_SHORT).show();
+                        }
+                        // enteredFee is already validated to accept only numeric/decimal values in EditText of UI
+                        // enteredTime is already validated to accept only integer values in EditText of UI
 
+                        else {
+                            updateItem(lessorName, itemName,enteredItemName, category, enteredDescription, enteredFee, enteredTime);
+                            b.dismiss();
+                        }
+                    }
+                });
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
     }
 
     // Removes item from database
-    private void deleteItem(String lessorName, String itemName) {
-        DatabaseReference dR = FirebaseDatabase.getInstance().getReference("Lessors").child(lessorName).child("Items").child(itemName);
+    private void deleteItem(String username, String itemName) {
+        DatabaseReference dR = FirebaseDatabase.getInstance().getReference("Lessors").child(username).child("Items").child(itemName);
         dR.removeValue();
         Toast.makeText(getApplicationContext(), "Item Deleted", Toast.LENGTH_LONG).show();
     }
 
     // Updates item information in database
-    //private void updateCategory(){}
+    private void updateItem(String username, String oldItemName, String itemName, String category, String description, String fee, String timePeriod){
+
+        DatabaseReference dR = FirebaseDatabase.getInstance().getReference("Lessors").child(username).child("Items");
+        // Create a new item with the updated name and other details
+        Item updatedItem = new Item(username, itemName, category, description, Math.round(Double.parseDouble(fee)*100)/100D, Integer.parseInt(timePeriod));
+
+        // Add the updated item with the new item name
+        dR.child(itemName).setValue(updatedItem).addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                // Delete the old item if the new item was successfully created
+                if (!oldItemName.equalsIgnoreCase(itemName)) {
+                    dR.child(oldItemName).removeValue();
+                }
+                Toast.makeText(getApplicationContext(), "Updated Item", Toast.LENGTH_LONG).show();
+            } else {
+                Toast.makeText(getApplicationContext(), "Failed to Update Item", Toast.LENGTH_LONG).show();
+            }
+        });
+    }
 
 }

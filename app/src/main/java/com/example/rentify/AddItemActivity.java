@@ -24,27 +24,16 @@ public class AddItemActivity extends AppCompatActivity {
 
     DatabaseReference dRef;
 
-    // Validates if input contains alphabets only
+    // Validates if input contains alphabets only (allowed to have spaces in between alphabets)
     private boolean isAlpha(String name) {
-        char[] chars = name.toCharArray();
+        String nameCleaned = name.strip();
+        char[] chars = nameCleaned.toCharArray();
         for (char c : chars) {
-            if ((!Character.isLetter(c))) {
+            if ((!Character.isLetter(c)) && (!Character.isWhitespace(c))) {
                 return false;
             }
         }
         return true;
-    }
-
-    private boolean isNumeric(String str) {
-        if (str == null || str.isEmpty()) {
-            return false;
-        }
-        try {
-            Double.parseDouble(str);
-            return true;
-        } catch (NumberFormatException e) {
-            return false;
-        }
     }
 
     @Override
@@ -67,11 +56,8 @@ public class AddItemActivity extends AppCompatActivity {
 
         ArrayList<String> categories = new ArrayList<String>();
         dRef.child("Categories").addListenerForSingleValueEvent(new ValueEventListener() {
-            // Check if a category name already exists in database
-            // If not, adds Category to database
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                String validCategory;
 
                 for (DataSnapshot categorySnapshot : dataSnapshot.getChildren()) {
                     String existingCategoryName = categorySnapshot.child("categoryName").getValue(String.class);
@@ -110,15 +96,17 @@ public class AddItemActivity extends AppCompatActivity {
                         String enteredCost = fee.getText().toString();
                         String enteredTime = itemTimePeriod.getText().toString();
 
-                        if ((enteredItemName.isEmpty()) || (enteredDescription.isEmpty()) || (enteredItemName.isEmpty()) || (enteredTime.isEmpty())) {
-                            Toast.makeText(AddItemActivity.this, "Name, Description and Cost for Item required", Toast.LENGTH_SHORT).show();
-                        } else if (!(isNumeric(enteredCost))) {
-                            Toast.makeText(AddItemActivity.this, "Cost must be a number", Toast.LENGTH_SHORT).show();
-                        } else if (!(isNumeric(enteredTime))) {
-                            Toast.makeText(AddItemActivity.this, "Time Period must be a number", Toast.LENGTH_SHORT).show();
-                        } else if (!(isAlpha(enteredItemName))) {
+                        // Check if any input fields are filled
+                        if ((enteredItemName.isEmpty()) || (enteredDescription.isEmpty()) || (enteredCost.isEmpty()) || (enteredTime.isEmpty())) {
+                            Toast.makeText(AddItemActivity.this, "Name, Description, Cost and Time Period for Item required", Toast.LENGTH_SHORT).show();
+                        }
+                        else if (!(isAlpha(enteredItemName))) {
                             Toast.makeText(AddItemActivity.this, "Name of item must only be of letters", Toast.LENGTH_SHORT).show();
-                        } else {
+                        }
+                        // enteredCost is already validated to accept only numeric/decimal values in EditText of UI
+                        // enteredTime is already validated to accept only integer values in EditText of UI
+                        // category is already validated to provide a dropdown menu of only existing categories
+                        else {
                             Item item = new Item(username, enteredItemName, category, enteredDescription, Math.round(Double.parseDouble(enteredCost)*100)/100D, Integer.parseInt(enteredTime));
                             dRef.child("Lessors").child(username).child("Items").child(enteredItemName).setValue(item);
 

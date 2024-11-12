@@ -21,11 +21,12 @@ public class RenterSignupActivity extends AppCompatActivity {
 
     DatabaseReference dRef;
 
-    // Validates if input contains alphabets only
-    public boolean isAlpha(String name) {
-        char[] chars = name.toCharArray();
+    // Validates if input contains alphabets only (allowed to have spaces in between alphabets)
+    private boolean isAlpha(String name) {
+        String nameCleaned = name.strip();
+        char[] chars = nameCleaned.toCharArray();
         for (char c : chars) {
-            if(!Character.isLetter(c)) {
+            if ((!Character.isLetter(c)) && (!Character.isWhitespace(c))) {
                 return false;
             }
         }
@@ -79,7 +80,7 @@ public class RenterSignupActivity extends AppCompatActivity {
                 if ((enteredEmail.isEmpty()) || (enteredFirstname.isEmpty()) || (enteredLastname.isEmpty()) || (enteredUsername.isEmpty()) || (enteredPassword.isEmpty())) {
                     Toast.makeText(RenterSignupActivity.this, "All text fields must be filled", Toast.LENGTH_SHORT).show();
                 } else if (!(isAlpha(enteredFirstname)) || !(isAlpha(enteredLastname))) {
-                    Toast.makeText(RenterSignupActivity.this, "Username & Lastname must only be of letters", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RenterSignupActivity.this, "Firstname & Lastname can only contain alphabets", Toast.LENGTH_SHORT).show();
                 } else if (!enteredUsername.matches("[a-zA-Z0-9]*")) {
                     Toast.makeText(RenterSignupActivity.this, "Username can not have spaces or special characters", Toast.LENGTH_SHORT).show();
                 }  else if (!(isValidEmailAddress(enteredEmail))){
