@@ -49,7 +49,7 @@ public class EditItemsActivity extends AppCompatActivity {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Item item = (Item) lessorItemList.get(i);
-                showUpdateDeleteDialog(item.getItemName(),item.getDescription(), item.getFee(), item.getTimePeriod(), item.getCategory());
+                showUpdateDeleteDialog(item.getItemName(),item.getDescription(), item.getFee(), item.getTimePeriod(), item.getCategory(), item.getLessorName());
                 return true;
             }
         });
@@ -89,7 +89,7 @@ public class EditItemsActivity extends AppCompatActivity {
     }
 
     // Updates the list of items shown
-    private void showUpdateDeleteDialog(String itemName,String itemDescription, int itemFee, int itemTimePeriod, String itemCategory) {
+    private void showUpdateDeleteDialog(String itemName,String itemDescription, double itemFee, int itemTimePeriod, String itemCategory, String lessorName) {
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
         LayoutInflater inflater = getLayoutInflater();
         final View dialogView = inflater.inflate(R.layout.activity_update_item, null);
@@ -110,7 +110,7 @@ public class EditItemsActivity extends AppCompatActivity {
         buttonDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                deleteCategory(itemName);
+                deleteItem(lessorName, itemName);
                 b.dismiss();
             }
         });
@@ -133,10 +133,10 @@ public class EditItemsActivity extends AppCompatActivity {
     }
 
     // Removes item from database
-    private void deleteCategory(String itemName) {
-        DatabaseReference dR = FirebaseDatabase.getInstance().getReference("Categories").child(id);
+    private void deleteItem(String lessorName, String itemName) {
+        DatabaseReference dR = FirebaseDatabase.getInstance().getReference("Lessors").child(lessorName).child(itemName);
         dR.removeValue();
-        Toast.makeText(getApplicationContext(), "Category Deleted", Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(), "Item Deleted", Toast.LENGTH_LONG).show();
     }
 
     // Updates item information in database

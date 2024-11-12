@@ -119,7 +119,7 @@ public class AddItemActivity extends AppCompatActivity {
                         } else if (!(isAlpha(enteredItemName))) {
                             Toast.makeText(AddItemActivity.this, "Name of item must only be of letters", Toast.LENGTH_SHORT).show();
                         } else {
-                            Item item = new Item(username, enteredItemName, category, enteredDescription, Integer.parseInt(enteredCost), Integer.parseInt(enteredTime));
+                            Item item = new Item(username, enteredItemName, category, enteredDescription, Double.parseDouble(enteredCost), Integer.parseInt(enteredTime));
                             dRef.child("Lessors").child(username).child("Items").child(enteredItemName).setValue(item);
 
                             Toast.makeText(AddItemActivity.this, "Item added", Toast.LENGTH_SHORT).show();

@@ -13,28 +13,28 @@
     <EditText
         android:id="@+id/editTextFee"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:layout_below="@id/editTextItemName"
         android:hint="@string/feeText" />
 
     <EditText
         android:id="@+id/editTextCategory"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:layout_below="@id/editTextItemName"
         android:hint="@string/categoryText" />
 
     <EditText
         android:id="@+id/editTextTimePeriod"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:layout_below="@id/editTextItemName"
         android:hint="@string/timePeriodText" />
 
     <EditText
         android:id="@+id/editTextDescription"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:layout_below="@id/editTextItemName"
         android:hint="@string/descriptionText" />
 
