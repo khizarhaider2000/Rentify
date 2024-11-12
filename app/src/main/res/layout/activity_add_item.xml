@@ -51,7 +51,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="25dp"
             android:fontFamily="@font/netflix"
-            android:hint="@string/feeText"
+            android:hint="@string/feeHintText"
             android:inputType="numberDecimal"
             android:textColor="#000000"
             android:textColorHint="#000000"
@@ -81,7 +81,7 @@
             android:layout_marginRight="100dp"
             android:fontFamily="@font/netflix"
             android:hint="@string/timePeriodText"
-            android:inputType="text|textMultiLine"
+            android:inputType="number"
             android:textColor="#000000"
             android:textColorHint="#000000"
             android:textSize="22sp" />

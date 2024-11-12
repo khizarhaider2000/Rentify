@@ -24,7 +24,7 @@ public class Item {
 
     // Getters and Setters
     public String getLessorName() { return lessorName; }
-    public void setLessorName(String lessorName) { this.lessorName = this.lessorName; }
+    public void setLessorName(String lessorName) { this.lessorName = lessorName; }
 
     public String getItemName() { return itemName; }
     public void setItemName(String itemName) { this.itemName = itemName; }

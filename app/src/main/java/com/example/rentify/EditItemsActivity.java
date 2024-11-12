@@ -134,7 +134,7 @@ public class EditItemsActivity extends AppCompatActivity {
 
     // Removes item from database
     private void deleteItem(String lessorName, String itemName) {
-        DatabaseReference dR = FirebaseDatabase.getInstance().getReference("Lessors").child(lessorName).child(itemName);
+        DatabaseReference dR = FirebaseDatabase.getInstance().getReference("Lessors").child(lessorName).child("Items").child(itemName);
         dR.removeValue();
         Toast.makeText(getApplicationContext(), "Item Deleted", Toast.LENGTH_LONG).show();
     }
