@@ -23,6 +23,7 @@
     <string name="userAccountsText">User Accounts</string>
     <string name="addText">Add</string>
     <string name="addCategoryText">Add Category</string>
+    <string name="addLessorItemText">Add Item</string>
     <string name="nameText">Name</string>
     <string name="descriptionText">Description</string>
     <string name="deleteText">Delete</string>
@@ -33,4 +34,9 @@
     <string name="categories">Categories</string>
     <string name="categoryName">Category Name</string>
     <string name="updateText">Update</string>
+    <string name="feeText">Fee</string>
+    <string name="categoryText">Category</string>
+    <string name="itemNameText">Item Name</string>
+    <string name="timePeriodText">Time Period</string>
+    <string name="weekText">Week(s)</string>
 </resources>

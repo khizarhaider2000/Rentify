@@ -79,7 +79,7 @@ public class LoginActivity extends AppCompatActivity {
                     String storedPassword = dataSnapshot.child("password").getValue(String.class);
                     if (storedPassword != null && storedPassword.equals(password)) {
                         Toast.makeText(LoginActivity.this, "Welcome back, " + username, Toast.LENGTH_SHORT).show();
-                        navigateToPostLogin(username, "Lessor");
+                        navigateToPostLogin(username, "Lessor", PostLessorLoginActivity.class);
                     } else {
                         Toast.makeText(LoginActivity.this, "Incorrect password. Please try again.", Toast.LENGTH_SHORT).show();
                     }
@@ -106,7 +106,7 @@ public class LoginActivity extends AppCompatActivity {
                     String storedPassword = dataSnapshot.child("password").getValue(String.class);
                     if (storedPassword != null && storedPassword.equals(password)) {
                         Toast.makeText(LoginActivity.this, "Welcome back, " + username, Toast.LENGTH_SHORT).show();
-                        navigateToPostLogin(username, "Renter");
+                        navigateToPostLogin(username, "Renter", PostRenterLoginActivity.class);
                     } else {
                         Toast.makeText(LoginActivity.this, "Incorrect password. Please try again.", Toast.LENGTH_SHORT).show();
                     }
@@ -122,8 +122,8 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    private void navigateToPostLogin(String username, String accountType) {
-        Intent intent = new Intent(LoginActivity.this, PostLoginActivity.class);
+    private void navigateToPostLogin(String username, String accountType, Class<?> activity) {
+        Intent intent = new Intent(LoginActivity.this, activity);
         intent.putExtra("accountType", accountType);
         intent.putExtra("username", username);
         startActivity(intent);

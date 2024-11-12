@@ -31,7 +31,7 @@
             android:name=".RenterSignupActivity"
             android:exported="false" />
         <activity
-            android:name=".PostLoginActivity"
+            android:name=".PostLessorLoginActivity"
             android:exported="false" />
         <activity
             android:name=".AdminPostLoginActivity"
@@ -51,7 +51,12 @@
         <activity
             android:name=".EditCategoriesActivity"
             android:exported="false" />
-
+        <activity
+            android:name=".AddLessorItemActivity"
+            android:exported="false" />
+        <activity
+            android:name=".PostRenterLoginActivity"
+            android:exported="false" />
         <activity
             android:name=".MainActivity"
             android:exported="true">

@@ -111,7 +111,7 @@ public class RenterSignupActivity extends AppCompatActivity {
 
                                             // Navigate to Post Login Activity along with renter information
                                             Toast.makeText(RenterSignupActivity.this, "Congrats on your Renter Account", Toast.LENGTH_SHORT).show();
-                                            Intent intent = new Intent(RenterSignupActivity.this, PostLoginActivity.class);
+                                            Intent intent = new Intent(RenterSignupActivity.this, PostLessorLoginActivity.class);
                                             intent.putExtra("accountType", "Renter");
                                             intent.putExtra("username", enteredUsername);
                                             intent.putExtra("email", enteredEmail);

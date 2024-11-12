@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/login_background">
+
+    <TextView
+        android:id="@+id/weekTextView"
+        android:layout_width="115dp"
+        android:layout_height="22dp"
+        android:layout_marginStart="-100dp"
+        android:layout_marginTop="-210dp"
+        android:fontFamily="@font/netflix"
+        android:text="@string/weekText"
+        android:textColor="@color/black"
+        android:textSize="22sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/addItemLayout"
+        app:layout_constraintTop_toBottomOf="@+id/addItemLayout" />
+
+    <LinearLayout
+        android:id="@+id/addItemLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="100dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="170dp"
+        android:layout_marginEnd="30dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_marginHorizontal="30dp">
+
+        <EditText
+            android:id="@+id/lessorItemName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/netflix"
+            android:hint="@string/nameText"
+            android:inputType="text"
+            android:textColor="#000000"
+            android:textColorHint="#000000"
+            android:textSize="28sp" />
+
+        <EditText
+            android:id="@+id/addItemCostTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:fadeScrollbars="false"
+            android:fontFamily="@font/netflix"
+            android:hint="@string/feeText"
+            android:inputType="text|textMultiLine"
+            android:maxLines="7"
+            android:overScrollMode="always"
+            android:scrollbars="vertical"
+            android:textColor="#000000"
+            android:textColorHint="#000000"
+            android:textSize="22sp" />
+
+        <EditText
+            android:id="@+id/addItemCategoryTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:fadeScrollbars="false"
+            android:fontFamily="@font/netflix"
+            android:hint="@string/categoryText"
+            android:inputType="textMultiLine"
+            android:maxLines="7"
+            android:overScrollMode="always"
+            android:scrollbars="vertical"
+            android:textColor="#000000"
+            android:textColorHint="#000000"
+            android:textSize="22sp" />
+
+        <EditText
+            android:id="@+id/itemTimePeriod"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:fadeScrollbars="false"
+            android:fontFamily="@font/netflix"
+            android:hint="@string/timePeriodText"
+            android:inputType="text|textMultiLine"
+            android:maxLines="7"
+            android:overScrollMode="always"
+            android:scrollbars="vertical"
+            android:textColor="#000000"
+            android:textColorHint="#000000"
+            android:textSize="22sp" />
+
+        <EditText
+            android:id="@+id/itemDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:fadeScrollbars="false"
+            android:fontFamily="@font/netflix"
+            android:hint="@string/descriptionText"
+            android:inputType="textMultiLine"
+            android:maxLines="7"
+            android:overScrollMode="always"
+            android:scrollbars="vertical"
+            android:textColor="#000000"
+            android:textColorHint="#000000"
+            android:textSize="22sp" />
+
+        <Button
+            android:id="@+id/addItemButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="35dp"
+            android:layout_weight="2"
+            android:backgroundTint="#3F51B5"
+            android:fontFamily="@font/netflix"
+            android:paddingHorizontal="50dp"
+            android:paddingVertical="12dp"
+            android:text="@string/addText"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textSize="20sp" />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/backButton2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginBottom="50dp"
+        android:layout_weight="2"
+        android:backgroundTint="#3F51B5"
+        android:fontFamily="@font/netflix"
+        android:padding="12dp"
+        android:text="@string/backText"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/addLessorItemTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="80dp"
+        android:fontFamily="@font/genghis"
+        android:text="@string/addLessorItemText"
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textColor="@color/white"
+        android:textSize="34sp"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

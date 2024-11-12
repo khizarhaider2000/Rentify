@@ -114,7 +114,7 @@ public class LessorSignupActivity extends AppCompatActivity {
 
                                             // Navigate to Post Login Activity along with lessor information
                                             Toast.makeText(LessorSignupActivity.this, "Congrats on your Lessor Account", Toast.LENGTH_SHORT).show();
-                                            Intent intent = new Intent(LessorSignupActivity.this, PostLoginActivity.class);
+                                            Intent intent = new Intent(LessorSignupActivity.this, PostLessorLoginActivity.class);
                                             intent.putExtra("accountType", "Lessor");
                                             intent.putExtra("username", enteredUsername);
                                             intent.putExtra("email", enteredEmail);
