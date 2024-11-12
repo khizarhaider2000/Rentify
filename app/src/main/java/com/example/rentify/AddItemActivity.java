@@ -63,8 +63,8 @@ public class AddItemActivity extends AppCompatActivity {
         });
 
         EditText lessorItemName = findViewById(R.id.lessorItemName);
-        EditText cost = findViewById(R.id.addItemCostTitle);
-        EditText category = findViewById(R.id.addItemCategoryTitle);
+        EditText fee = findViewById(R.id.addItemFee);
+        EditText category = findViewById(R.id.addItemCategory);
         EditText itemDescription = findViewById(R.id.itemDescription);
         EditText itemTimePeriod = findViewById(R.id.itemTimePeriod);
         Button addItemButton = findViewById(R.id.addItemButton);
@@ -76,18 +76,14 @@ public class AddItemActivity extends AppCompatActivity {
 
                 String enteredItemName = lessorItemName.getText().toString();
                 String enteredDescription = itemDescription.getText().toString();
-                String enteredCost = cost.getText().toString();
+                String enteredCost = fee.getText().toString();
                 String enteredCategory = category.getText().toString();
                 String enteredTime = itemTimePeriod.getText().toString();
 
-                if ((enteredItemName.isEmpty()) || (enteredDescription.isEmpty()) || (enteredItemName.isEmpty()) || (enteredTime.isEmpty())) {
-                    Toast.makeText(AddItemActivity.this, "Name, Description and Cost for Item required", Toast.LENGTH_SHORT).show();
-                } else if (!(isNumeric(enteredCost))) {
-                    Toast.makeText(AddItemActivity.this, "Cost must be a number", Toast.LENGTH_SHORT).show();
-                } else if (!(isNumeric(enteredTime))) {
-                    Toast.makeText(AddItemActivity.this, "Time Period must be a number", Toast.LENGTH_SHORT).show();
-                } else if (!(isAlpha(enteredItemName))) {
-                    Toast.makeText(AddItemActivity.this, "Name of item must only be of letters", Toast.LENGTH_SHORT).show();
+                if ((enteredItemName.isEmpty()) || (enteredDescription.isEmpty()) || (enteredCost.isEmpty()) || (enteredCategory.isEmpty()) || (enteredTime.isEmpty())) {
+                    Toast.makeText(AddItemActivity.this, "Name, Description, Category, and Cost for Item required", Toast.LENGTH_SHORT).show();
+                } else if (!(isAlpha(enteredItemName)) || !(isAlpha(enteredCategory))) {
+                    Toast.makeText(AddItemActivity.this, "Name and Category of item must only be of letters", Toast.LENGTH_SHORT).show();
                 } else {
                     dRef.child("Categories").addListenerForSingleValueEvent(new ValueEventListener() {
 
@@ -111,8 +107,8 @@ public class AddItemActivity extends AppCompatActivity {
                             if (!(exists)) {
                                 Toast.makeText(AddItemActivity.this, "Category does not exists", Toast.LENGTH_SHORT).show();
                             } else {
-                                int cost = Integer.parseInt(enteredCost);
-                                Item item = new Item(enteredItemName, validCategory, enteredDescription, cost, Integer.parseInt(enteredTime));
+                                double cost = Double.parseDouble(enteredCost);
+                                Item item = new Item(username, enteredItemName, validCategory, enteredDescription, cost, Integer.parseInt(enteredTime));
                                 dRef.child("Lessors").child(username).child("Items").child(enteredItemName).setValue(item);
 
                                 Toast.makeText(AddItemActivity.this, "Item added", Toast.LENGTH_SHORT).show();

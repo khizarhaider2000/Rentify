@@ -40,14 +40,12 @@
         android:id="@+id/lessorItemsList"
         android:layout_width="413dp"
         android:layout_height="490dp"
-        android:layout_marginStart="7dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="3dp"
+        android:layout_marginTop="7dp"
+        android:layout_marginBottom="12dp"
         android:scrollbars="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/backButton"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editItemsTitle">
-    </ListView>
+        app:layout_constraintTop_toBottomOf="@+id/editItemsTitle"></ListView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

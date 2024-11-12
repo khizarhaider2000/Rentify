@@ -2,9 +2,10 @@ package com.example.rentify;
 
 public class Item {
 
+    private String lessorName;
     private String itemName;
     private String description;
-    private int fee;
+    private double fee;
     private int timePeriod;
     private String category;
 
@@ -12,7 +13,8 @@ public class Item {
     // Default constructor required for calls to DataSnapshot.getValue(Category.class)
     public Item() {}
 
-    public Item(String itemName, String category, String description, int fee, int timePeriod) {
+    public Item(String lessorName, String itemName, String category, String description, double fee, int timePeriod) {
+        this.lessorName = lessorName;
         this.itemName = itemName;
         this.description = description;
         this.category = category;
@@ -21,14 +23,17 @@ public class Item {
     }
 
     // Getters and Setters
+    public String getLessorName() { return lessorName; }
+    public void setLessorName(String lessorName) { this.lessorName = this.lessorName; }
+
     public String getItemName() { return itemName; }
     public void setItemName(String itemName) { this.itemName = itemName; }
 
     public String getDescription() { return description; }
     public void setDescription(String description) { this.description = description; }
 
-    public int getFee() { return fee; }
-    public void setFee(int fee) { this.fee = fee; }
+    public double getFee() { return fee; }
+    public void setFee(double fee) { this.fee = fee; }
 
     public int getTimePeriod() { return timePeriod; }
     public void setTimePeriod(int timePeriod) { this.timePeriod = timePeriod; }

@@ -8,8 +8,8 @@
 
     <TextView
         android:id="@+id/weekTextView"
-        android:layout_width="115dp"
-        android:layout_height="22dp"
+        android:layout_width="118dp"
+        android:layout_height="36dp"
         android:layout_marginStart="-100dp"
         android:layout_marginTop="-210dp"
         android:fontFamily="@font/netflix"
@@ -46,33 +46,25 @@
             android:textSize="28sp" />
 
         <EditText
-            android:id="@+id/addItemCostTitle"
+            android:id="@+id/addItemFee"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="25dp"
-            android:fadeScrollbars="false"
             android:fontFamily="@font/netflix"
             android:hint="@string/feeText"
-            android:inputType="text|textMultiLine"
-            android:maxLines="7"
-            android:overScrollMode="always"
-            android:scrollbars="vertical"
+            android:inputType="numberDecimal"
             android:textColor="#000000"
             android:textColorHint="#000000"
             android:textSize="22sp" />
 
         <EditText
-            android:id="@+id/addItemCategoryTitle"
+            android:id="@+id/addItemCategory"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="25dp"
-            android:fadeScrollbars="false"
             android:fontFamily="@font/netflix"
             android:hint="@string/categoryText"
-            android:inputType="textMultiLine"
-            android:maxLines="7"
-            android:overScrollMode="always"
-            android:scrollbars="vertical"
+            android:inputType="text"
             android:textColor="#000000"
             android:textColorHint="#000000"
             android:textSize="22sp" />
@@ -82,13 +74,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="25dp"
-            android:fadeScrollbars="false"
+            android:layout_marginRight="100dp"
             android:fontFamily="@font/netflix"
             android:hint="@string/timePeriodText"
-            android:inputType="text|textMultiLine"
-            android:maxLines="7"
-            android:overScrollMode="always"
-            android:scrollbars="vertical"
+            android:inputType="number"
             android:textColor="#000000"
             android:textColorHint="#000000"
             android:textSize="22sp" />
