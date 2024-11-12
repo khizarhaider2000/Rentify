@@ -40,4 +40,5 @@
     <string name="timePeriodText">Time Period</string>
     <string name="weekText">Week(s)</string>
     <string name="itemsText">Items</string>
+    <string name="itemName">Item Name</string>
 </resources>
