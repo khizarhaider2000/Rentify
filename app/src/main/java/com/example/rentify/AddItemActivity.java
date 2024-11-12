@@ -2,8 +2,11 @@ package com.example.rentify;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -14,6 +17,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
 
 public class AddItemActivity extends AppCompatActivity {
 
@@ -52,8 +57,38 @@ public class AddItemActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_add_item);
 
-        // Check for back button being clicked
+        EditText lessorItemName = findViewById(R.id.lessorItemName);
+        EditText fee = findViewById(R.id.addItemFee);
+        EditText itemDescription = findViewById(R.id.itemDescription);
+        EditText itemTimePeriod = findViewById(R.id.itemTimePeriod);
+        Button addItemButton = findViewById(R.id.addItemButton);
+        Spinner categorySpinner = findViewById(R.id.categorySpinner);
         Button backButton = findViewById(R.id.backButton2);
+
+        ArrayList<String> categories = new ArrayList<String>();
+        dRef.child("Categories").addListenerForSingleValueEvent(new ValueEventListener() {
+            // Check if a category name already exists in database
+            // If not, adds Category to database
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String validCategory;
+
+                for (DataSnapshot categorySnapshot : dataSnapshot.getChildren()) {
+                    String existingCategoryName = categorySnapshot.child("categoryName").getValue(String.class);
+                    categories.add(existingCategoryName);
+                }
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(AddItemActivity.this, android.R.layout.simple_spinner_item, categories);
+                adapter.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
+                categorySpinner.setAdapter(adapter);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Toast.makeText(AddItemActivity.this, "Database error: " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
 
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,70 +97,44 @@ public class AddItemActivity extends AppCompatActivity {
             }
         });
 
-        EditText lessorItemName = findViewById(R.id.lessorItemName);
-        EditText fee = findViewById(R.id.addItemFee);
-        EditText category = findViewById(R.id.addItemCategory);
-        EditText itemDescription = findViewById(R.id.itemDescription);
-        EditText itemTimePeriod = findViewById(R.id.itemTimePeriod);
-        Button addItemButton = findViewById(R.id.addItemButton);
-
-        // Add category button that adds a Category object to the database with a unique id
-        addItemButton.setOnClickListener(new View.OnClickListener() {
+        categorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onClick(View view) {
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                String category = adapterView.getItemAtPosition(i).toString();
+                addItemButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
 
-                String enteredItemName = lessorItemName.getText().toString();
-                String enteredDescription = itemDescription.getText().toString();
-                String enteredCost = fee.getText().toString();
-                String enteredCategory = category.getText().toString();
-                String enteredTime = itemTimePeriod.getText().toString();
+                        String enteredItemName = lessorItemName.getText().toString();
+                        String enteredDescription = itemDescription.getText().toString();
+                        String enteredCost = fee.getText().toString();
+                        String enteredTime = itemTimePeriod.getText().toString();
 
-                if ((enteredItemName.isEmpty()) || (enteredDescription.isEmpty()) || (enteredCost.isEmpty()) || (enteredCategory.isEmpty()) || (enteredTime.isEmpty())) {
-                    Toast.makeText(AddItemActivity.this, "Name, Description, Category, and Cost for Item required", Toast.LENGTH_SHORT).show();
-                } else if (!(isAlpha(enteredItemName)) || !(isAlpha(enteredCategory))) {
-                    Toast.makeText(AddItemActivity.this, "Name and Category of item must only be of letters", Toast.LENGTH_SHORT).show();
-                } else {
-                    dRef.child("Categories").addListenerForSingleValueEvent(new ValueEventListener() {
+                        if ((enteredItemName.isEmpty()) || (enteredDescription.isEmpty()) || (enteredItemName.isEmpty()) || (enteredTime.isEmpty())) {
+                            Toast.makeText(AddItemActivity.this, "Name, Description and Cost for Item required", Toast.LENGTH_SHORT).show();
+                        } else if (!(isNumeric(enteredCost))) {
+                            Toast.makeText(AddItemActivity.this, "Cost must be a number", Toast.LENGTH_SHORT).show();
+                        } else if (!(isNumeric(enteredTime))) {
+                            Toast.makeText(AddItemActivity.this, "Time Period must be a number", Toast.LENGTH_SHORT).show();
+                        } else if (!(isAlpha(enteredItemName))) {
+                            Toast.makeText(AddItemActivity.this, "Name of item must only be of letters", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Item item = new Item(username, enteredItemName, category, enteredDescription, Integer.parseInt(enteredCost), Integer.parseInt(enteredTime));
+                            dRef.child("Lessors").child(username).child("Items").child(enteredItemName).setValue(item);
 
-                        String validCategory;
-                        // Check if a category name already exists in database
-                        // If not, adds Category to database
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            boolean exists = false;
-
-                            for (DataSnapshot categorySnapshot : dataSnapshot.getChildren()) {
-                                String existingCategoryName = categorySnapshot.child("categoryName").getValue(String.class);
-
-                                if (enteredCategory.equalsIgnoreCase(existingCategoryName)) {
-                                    exists = true;
-                                    validCategory = existingCategoryName;
-                                    break;
-                                }
-                            }
-
-                            if (!(exists)) {
-                                Toast.makeText(AddItemActivity.this, "Category does not exists", Toast.LENGTH_SHORT).show();
-                            } else {
-                                double cost = Double.parseDouble(enteredCost);
-                                Item item = new Item(username, enteredItemName, validCategory, enteredDescription, cost, Integer.parseInt(enteredTime));
-                                dRef.child("Lessors").child(username).child("Items").child(enteredItemName).setValue(item);
-
-                                Toast.makeText(AddItemActivity.this, "Item added", Toast.LENGTH_SHORT).show();
-                                finish();
-                            }
-
+                            Toast.makeText(AddItemActivity.this, "Item added", Toast.LENGTH_SHORT).show();
+                            finish();
                         }
+                    }
+                });
+            }
 
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
-                            Toast.makeText(AddItemActivity.this, "Database error: " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                }
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
 
             }
         });
 
     }
 }
+
