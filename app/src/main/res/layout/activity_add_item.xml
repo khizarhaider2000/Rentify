@@ -26,24 +26,28 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="100dp"
         android:layout_marginStart="30dp"
-        android:layout_marginTop="170dp"
+        android:layout_marginTop="76dp"
         android:layout_marginEnd="30dp"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:layout_marginHorizontal="30dp">
+
 
         <EditText
             android:id="@+id/lessorItemName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="-20dp"
             android:fontFamily="@font/netflix"
             android:hint="@string/nameText"
             android:inputType="text"
             android:textColor="#000000"
             android:textColorHint="#000000"
-            android:textSize="28sp" />
+            android:textSize="28sp"
+            app:layout_constraintTop_toBottomOf="@id/addLessorItemTitle" />
 
         <EditText
             android:id="@+id/addItemFee"
@@ -102,21 +106,6 @@
             android:textColorHint="#000000"
             android:textSize="22sp" />
 
-        <Button
-            android:id="@+id/addItemButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="35dp"
-            android:layout_weight="2"
-            android:backgroundTint="#3F51B5"
-            android:fontFamily="@font/netflix"
-            android:paddingHorizontal="50dp"
-            android:paddingVertical="12dp"
-            android:text="@string/addText"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-            android:textSize="20sp" />
-
     </LinearLayout>
 
     <Button
@@ -135,11 +124,37 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
+    <ImageView
+        android:id="@+id/itemImageView"
+        android:layout_width="79dp"
+        android:layout_height="79dp"
+        android:layout_marginTop="464dp"
+        android:contentDescription="@string/imageDescText"
+        android:scaleType="centerCrop"
+        android:src="@drawable/place_holder"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/selectImageButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#3F51B5"
+        android:text="@string/selectImageText"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textSize="18sp"
+        app:layout_constraintTop_toBottomOf="@id/itemImageView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="10dp" />
+
+
     <TextView
         android:id="@+id/addLessorItemTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="16dp"
         android:fontFamily="@font/netflix"
         android:text="@string/addLessorItemText"
         android:textAlignment="center"
@@ -147,6 +162,23 @@
         android:textColor="@color/white"
         android:textSize="34sp"
         app:layout_constraintTop_toTopOf="parent"
-        tools:layout_constraintTop_toTopOf="parent" />
+        tools:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="0dp" />
+
+    <Button
+        android:id="@+id/addItemButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#3F51B5"
+        android:text="@string/addText"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textSize="20sp"
+        app:layout_constraintTop_toBottomOf="@id/selectImageButton"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="30dp" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
