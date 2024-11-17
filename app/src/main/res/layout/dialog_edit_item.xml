@@ -1,0 +1,82 @@
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="16dp">
+
+    <EditText
+        android:id="@+id/editItemName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Item Name"
+        android:textSize="16sp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="8dp" />
+
+    <EditText
+        android:id="@+id/editItemFee"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Item Fee"
+        android:textSize="16sp"
+        app:layout_constraintTop_toBottomOf="@id/editItemName"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="8dp" />
+
+    <EditText
+        android:id="@+id/editItemDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Description"
+        android:textSize="16sp"
+        app:layout_constraintTop_toBottomOf="@id/editItemFee"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="8dp" />
+
+    <EditText
+        android:id="@+id/editItemTimePeriod"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Time Period"
+        android:textSize="16sp"
+        app:layout_constraintTop_toBottomOf="@id/editItemDescription"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="8dp" />
+
+    <Spinner
+        android:id="@+id/editItemCategorySpinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/editItemTimePeriod"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="16dp" />
+
+    <Button
+        android:id="@+id/updateItemButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Update"
+        app:layout_constraintTop_toBottomOf="@id/editItemCategorySpinner"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/cancelEditButton"
+        android:layout_marginEnd="8dp" />
+
+    <Button
+        android:id="@+id/cancelEditButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cancel"
+        app:layout_constraintTop_toBottomOf="@id/editItemCategorySpinner"
+        app:layout_constraintStart_toEndOf="@id/updateItemButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="8dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
