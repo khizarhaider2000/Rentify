@@ -1,6 +1,6 @@
 plugins {
     alias(libs.plugins.android.application)
-    id("com.google.gms.google-services")
+    id("com.google.gms.google-services") // Required for Firebase
 }
 
 android {
@@ -39,12 +39,17 @@ dependencies {
     implementation(libs.activity)
     implementation(libs.constraintlayout)
     implementation(libs.firebase.database)
+    implementation(libs.firebase.storage)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
 
+    // Firebase BoM (Bill of Materials)
     implementation(platform("com.google.firebase:firebase-bom:33.4.0"))
 
+    // Firebase Services
     implementation("com.google.firebase:firebase-analytics-ktx")
-    implementation("com.google.firebase:firebase-auth-ktx") // Added Firebase Authentication dependency
+    implementation("com.google.firebase:firebase-auth-ktx") // Authentication
+    implementation("com.google.firebase:firebase-storage-ktx") // Firebase Storage
 }

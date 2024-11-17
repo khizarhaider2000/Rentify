@@ -31,23 +31,11 @@ public class AddItemActivity extends AppCompatActivity {
     DatabaseReference dRef;
     private ImageView itemImageView;
     private Button selectImageButton;
+    private Button addItemButton; // Reference to the Add Item button
     private Uri imageUri; // Store the selected image URI for future use
-
-    // Validates if input contains alphabets only (allowed to have spaces in between alphabets)
-    private boolean isAlpha(String name) {
-        String nameCleaned = name.strip();
-        char[] chars = nameCleaned.toCharArray();
-        for (char c : chars) {
-            if ((!Character.isLetter(c)) && (!Character.isWhitespace(c))) {
-                return false;
-            }
-        }
-        return true;
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         String username = getIntent().getStringExtra("username");
         dRef = FirebaseDatabase.getInstance().getReference();
 
@@ -60,11 +48,14 @@ public class AddItemActivity extends AppCompatActivity {
         EditText fee = findViewById(R.id.addItemFee);
         EditText itemDescription = findViewById(R.id.itemDescription);
         EditText itemTimePeriod = findViewById(R.id.itemTimePeriod);
-        Button addItemButton = findViewById(R.id.addItemButton);
+        addItemButton = findViewById(R.id.addItemButton);
         Spinner categorySpinner = findViewById(R.id.categorySpinner);
         Button backButton = findViewById(R.id.backButton2);
         itemImageView = findViewById(R.id.itemImageView);
         selectImageButton = findViewById(R.id.selectImageButton);
+
+        // Disable the Add Item button initially
+        addItemButton.setEnabled(false);
 
         // Select image button click listener
         selectImageButton.setOnClickListener(new View.OnClickListener() {
@@ -104,7 +95,7 @@ public class AddItemActivity extends AppCompatActivity {
             }
         });
 
-        // Add item button functionality within selected category
+        // Add item button functionality
         categorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -112,7 +103,6 @@ public class AddItemActivity extends AppCompatActivity {
                 addItemButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-
                         String enteredItemName = lessorItemName.getText().toString();
                         String enteredDescription = itemDescription.getText().toString();
                         String enteredCost = fee.getText().toString();
@@ -120,26 +110,23 @@ public class AddItemActivity extends AppCompatActivity {
 
                         // Validate inputs
                         if ((enteredItemName.isEmpty()) || (enteredDescription.isEmpty()) || (enteredCost.isEmpty()) || (enteredTime.isEmpty())) {
-                            Toast.makeText(AddItemActivity.this, "Name, Description, Cost and Time Period for Item required", Toast.LENGTH_SHORT).show();
-                        }
-                        else if (!isAlpha(enteredItemName)) {
-                            Toast.makeText(AddItemActivity.this, "Name of item must only be of letters", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(AddItemActivity.this, "Name, Description, Cost, and Time Period for Item required", Toast.LENGTH_SHORT).show();
+                        } else if (imageUri == null) { // Check if an image is selected
+                            Toast.makeText(AddItemActivity.this, "Please select an image for the item", Toast.LENGTH_SHORT).show();
+                        } else if (!isAlpha(enteredItemName)) {
+                            Toast.makeText(AddItemActivity.this, "Name of item must only contain letters", Toast.LENGTH_SHORT).show();
                         } else {
                             // Create item and save to Firebase
                             Item item = new Item(username, enteredItemName, category, enteredDescription, Math.round(Double.parseDouble(enteredCost) * 100) / 100D, Integer.parseInt(enteredTime));
                             dRef.child("Lessors").child(username).child("Items").child(enteredItemName).setValue(item);
 
-                            // Check if imageUri is available
-                            if (imageUri != null) {
-                                // Code for uploading the imageUri to Firebase Storage can go here
-                                // Currently, it's stored as a reference for future use
-                            }
-
-                            Toast.makeText(AddItemActivity.this, "Item added", Toast.LENGTH_SHORT).show();
+                            // Code for uploading the imageUri to Firebase Storage (if implemented) can go here
+                            Toast.makeText(AddItemActivity.this, "Item added successfully", Toast.LENGTH_SHORT).show();
                             finish();
                         }
                     }
                 });
+
             }
 
             @Override
@@ -147,6 +134,17 @@ public class AddItemActivity extends AppCompatActivity {
                 // Do nothing
             }
         });
+    }
+    // Validates if input contains only alphabets (spaces allowed)
+    private boolean isAlpha(String name) {
+        String nameCleaned = name.strip(); // Remove leading and trailing spaces
+        char[] chars = nameCleaned.toCharArray();
+        for (char c : chars) {
+            if (!Character.isLetter(c) && !Character.isWhitespace(c)) {
+                return false;
+            }
+        }
+        return true;
     }
 
     // Handle the result of image selection
@@ -156,6 +154,9 @@ public class AddItemActivity extends AppCompatActivity {
         if (requestCode == SELECT_IMAGE_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
             imageUri = data.getData();
             itemImageView.setImageURI(imageUri); // Display the selected image in the ImageView
+
+            // Enable the Add Item button after an image is selected
+            addItemButton.setEnabled(true);
         }
     }
 }

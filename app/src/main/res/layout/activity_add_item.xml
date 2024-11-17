@@ -126,8 +126,8 @@
 
     <ImageView
         android:id="@+id/itemImageView"
-        android:layout_width="79dp"
-        android:layout_height="79dp"
+        android:layout_width="157dp"
+        android:layout_height="90dp"
         android:layout_marginTop="464dp"
         android:contentDescription="@string/imageDescText"
         android:scaleType="centerCrop"
@@ -136,19 +136,20 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+
     <Button
         android:id="@+id/selectImageButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
         android:backgroundTint="#3F51B5"
         android:text="@string/selectImageText"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textSize="18sp"
-        app:layout_constraintTop_toBottomOf="@id/itemImageView"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="10dp" />
-
+        app:layout_constraintHorizontal_bias="0.513"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/itemImageView" />
 
     <TextView
         android:id="@+id/addLessorItemTitle"
