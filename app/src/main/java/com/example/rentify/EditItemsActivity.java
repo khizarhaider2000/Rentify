@@ -121,6 +121,7 @@ public class EditItemsActivity extends AppCompatActivity {
 
         dRef = FirebaseDatabase.getInstance().getReference();
 
+        // UI components
         final EditText editTextItemName = (EditText) dialogView.findViewById(R.id.editTextItemName);
         final EditText editTextItemFee = (EditText) dialogView.findViewById(R.id.editTextFee);
         Spinner categorySpinner = dialogView.findViewById(R.id.categorySpinner);
@@ -133,6 +134,7 @@ public class EditItemsActivity extends AppCompatActivity {
         final AlertDialog b = dialogBuilder.create();
         b.show();
 
+        // Load categories from Firebase and populate Spinner
         ArrayList<String> categories = new ArrayList<String>();
         dRef.child("Categories").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -153,6 +155,7 @@ public class EditItemsActivity extends AppCompatActivity {
             }
         });
 
+        // Check for delete button being clicked
         buttonDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -161,6 +164,7 @@ public class EditItemsActivity extends AppCompatActivity {
             }
         });
 
+        // Update item button within selected category
         categorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -173,6 +177,7 @@ public class EditItemsActivity extends AppCompatActivity {
                         String enteredTime = editTextItemTimePeriod.getText().toString().trim();
                         String enteredDescription = editTextDescription.getText().toString();
 
+                        // Validate all input fields
                         if ((enteredItemName.isEmpty()) || (enteredDescription.isEmpty()) || (enteredFee.isEmpty()) || (enteredTime.isEmpty())) {
                             Toast.makeText(EditItemsActivity.this, "Name, Description, Cost and Time Period for Item required", Toast.LENGTH_SHORT).show();
                         } else if (!(isAlpha(enteredItemName))) {
@@ -182,6 +187,7 @@ public class EditItemsActivity extends AppCompatActivity {
                         // enteredTime is already validated to accept only integer values in EditText of UI
                         // category is already validated to provide a dropdown menu of only existing categories
 
+                        // Update Item if all fields satisfied
                         else {
                             updateItem(key, lessorName, itemName,enteredItemName, category, enteredDescription, enteredFee, enteredTime);
                             b.dismiss();
@@ -192,7 +198,7 @@ public class EditItemsActivity extends AppCompatActivity {
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
-
+                // Do nothing
             }
         });
     }

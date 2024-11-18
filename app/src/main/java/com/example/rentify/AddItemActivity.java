@@ -98,7 +98,7 @@ public class AddItemActivity extends AppCompatActivity {
                         String enteredCost = fee.getText().toString();
                         String enteredTime = itemTimePeriod.getText().toString();
 
-                        // Check if all input fields are filled
+                        // Validate all input fields
                         if ((enteredItemName.isEmpty()) || (enteredDescription.isEmpty()) || (enteredCost.isEmpty()) || (enteredTime.isEmpty())) {
                             Toast.makeText(AddItemActivity.this, "Name, Description, Cost and Time Period for Item required", Toast.LENGTH_SHORT).show();
                         }

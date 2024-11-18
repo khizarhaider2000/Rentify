@@ -31,11 +31,13 @@ public class SignupActivity extends AppCompatActivity {
         // Navigate to the Lessor Signup Activity
         Intent intent = new Intent(getApplicationContext(), LessorSignupActivity.class);
         startActivityForResult(intent, 0);
+        finish();
     }
 
     public void OnRenterButton(View view) {
         // Navigate to the Renter Signup Activity
         Intent intent = new Intent(getApplicationContext(), RenterSignupActivity.class);
         startActivityForResult(intent, 0);
+        finish();
     }
 }

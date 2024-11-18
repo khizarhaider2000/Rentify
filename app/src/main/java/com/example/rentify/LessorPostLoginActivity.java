@@ -29,7 +29,6 @@ public class LessorPostLoginActivity extends AppCompatActivity {
 
         // Check for logout button being clicked
         Button logoutButton = findViewById(R.id.logoutButton);
-
         logoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -40,7 +39,6 @@ public class LessorPostLoginActivity extends AppCompatActivity {
 
         // Button to navigate to adding item page
         Button addButton = findViewById(R.id.addButton);
-
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -52,7 +50,6 @@ public class LessorPostLoginActivity extends AppCompatActivity {
 
         // Button to navigate to editing/deleting items page
         Button editButton = findViewById(R.id.editButton);
-
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
