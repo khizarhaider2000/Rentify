@@ -43,7 +43,4 @@
     <string name="itemName">Item Name</string>
     <string name="feeHintText">Fee (e.g. 1.00)</string>
     <string name="timePeriodWeeksText">Time Period (Number of Weeks)</string>
-
-    <string name="imageDescText">Item image placeholder</string>
-    <string name="selectImageText">Select Image</string>
 </resources>
