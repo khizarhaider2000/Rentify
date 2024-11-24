@@ -38,7 +38,7 @@ public class LessorPostLoginActivity extends AppCompatActivity {
         });
 
         // Button to navigate to adding item page
-        Button addButton = findViewById(R.id.addButton);
+        Button addButton = findViewById(R.id.searchButton);
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -29,6 +29,7 @@ import java.util.List;
 public class EditItemsActivity extends AppCompatActivity {
 
     private DatabaseReference databaseReference;
+    private DatabaseReference itemsReference;
     DatabaseReference dRef;
     ListView lessorItemsListView;
     private List<Item> lessorItemList;
@@ -114,6 +115,7 @@ public class EditItemsActivity extends AppCompatActivity {
 
     // Updates the list of items shown
     private void showUpdateDeleteDialog(String key, String itemName,String itemDescription, double itemFee, int itemTimePeriod, String itemCategory, String lessorName) {
+        itemsReference = FirebaseDatabase.getInstance().getReference("Items").child(itemCategory).child(itemName);
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
         LayoutInflater inflater = getLayoutInflater();
         final View dialogView = inflater.inflate(R.layout.activity_update_item, null);
@@ -206,6 +208,7 @@ public class EditItemsActivity extends AppCompatActivity {
     // Removes item from database
     private void deleteItem(String key) {
         DatabaseReference dR = databaseReference.child(key);
+        itemsReference.removeValue();
         dR.removeValue();
         Toast.makeText(getApplicationContext(), "Item Deleted", Toast.LENGTH_LONG).show();
     }
@@ -225,6 +228,9 @@ public class EditItemsActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Failed to Update Item", Toast.LENGTH_LONG).show();
             }
         });
+
+        itemsReference.removeValue();
+        dRef.child("Items").child(category).child(updatedItem.getItemName()).setValue(updatedItem);
     }
 
 }

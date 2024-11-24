@@ -116,6 +116,7 @@ public class AddItemActivity extends AppCompatActivity {
 
                             // Store the item under the unique key
                             if (uniqueKey != null) {
+                                dRef.child("Items").child(category).child(item.getItemName()).setValue(item);
                                 dRef.child("Lessors").child(username).child("Items").child(uniqueKey).setValue(item)
                                     .addOnSuccessListener(aVoid -> {
                                         Toast.makeText(AddItemActivity.this, "Item added", Toast.LENGTH_SHORT).show();

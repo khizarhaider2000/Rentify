@@ -1,5 +1,6 @@
 package com.example.rentify;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -33,6 +34,16 @@ public class RenterPostLoginActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Toast.makeText(RenterPostLoginActivity.this, "Logged out successfully", Toast.LENGTH_SHORT).show();
                 finish();
+            }
+        });
+
+        // Button to navigate to searching items page
+        Button searchButton = findViewById(R.id.searchButton);
+        searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(RenterPostLoginActivity.this, SearchItemsActivity.class);
+                startActivity(intent);
             }
         });
     }

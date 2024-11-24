@@ -49,6 +49,9 @@
             android:name=".EditLessorAccountsActivity"
             android:exported="false" />
         <activity
+            android:name=".SearchItemsActivity"
+            android:exported="false" />
+        <activity
             android:name=".EditRenterAccountsActivity"
             android:exported="false" />
         <activity

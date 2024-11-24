@@ -7,9 +7,6 @@ import android.widget.Button;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 public class CategoriesActivity extends AppCompatActivity {
 
@@ -30,7 +27,7 @@ public class CategoriesActivity extends AppCompatActivity {
         });
 
         // Button to navigate to adding category page
-        Button addButton = findViewById(R.id.addButton);
+        Button addButton = findViewById(R.id.searchButton);
 
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
