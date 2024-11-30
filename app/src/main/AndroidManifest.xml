@@ -67,6 +67,9 @@
             android:name=".RenterPostLoginActivity"
             android:exported="false" />
         <activity
+            android:name=".RequestsActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
