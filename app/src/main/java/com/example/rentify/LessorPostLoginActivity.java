@@ -59,6 +59,17 @@ public class LessorPostLoginActivity extends AppCompatActivity {
             }
         });
 
+        // Button to navigate to manage requests page
+        Button manageRequestsButton = findViewById(R.id.manageButton);
+        manageRequestsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(LessorPostLoginActivity.this, ManageRequestsActivity.class);
+                //intent.putExtra("username", username);
+                startActivity(intent);
+            }
+        });
+
     }
 
 }

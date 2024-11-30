@@ -45,4 +45,6 @@
     <string name="timePeriodWeeksText">Time Period (Number of Weeks)</string>
     <string name="searchText">Search</string>
     <string name="Request">Request</string>
+    <string name="requestsText">Requests</string>
+    <string name="manageText">Manage</string>
 </resources>

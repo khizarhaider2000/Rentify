@@ -22,11 +22,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 
-import androidx.activity.EdgeToEdge;
-import androidx.appcompat.app.AppCompatActivity;
-
-import com.google.firebase.database.FirebaseDatabase;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -66,7 +61,7 @@ public class SearchItemsActivity extends AppCompatActivity {
 
         Spinner itemSpinner = findViewById(R.id.itemSpinner);
         Button backButton = findViewById(R.id.backButton3);
-        Button searchItemButton = findViewById(R.id.searchButton2);
+        Button searchItemButton = findViewById(R.id.manageButton);
         EditText itemName = findViewById(R.id.itemName);
 
         // Check if any items in the listview are long clicked
