@@ -36,6 +36,7 @@ public class SearchItemsActivity extends AppCompatActivity {
     private List<Item> items;
     DatabaseReference databaseReference;
     DatabaseReference dRef;
+    DatabaseReference dRefReq;
     private List<Item> itemList;
 
     // Validates if input contains alphabets only (allowed to have spaces in between alphabets)
@@ -58,6 +59,7 @@ public class SearchItemsActivity extends AppCompatActivity {
 
         databaseReference = FirebaseDatabase.getInstance().getReference("Items");
         dRef = FirebaseDatabase.getInstance().getReference("Categories");
+        dRefReq = FirebaseDatabase.getInstance().getReference("Lessors");
 
         itemListView = findViewById(R.id.itemListView);
         itemList = new ArrayList<>();
@@ -207,13 +209,13 @@ public class SearchItemsActivity extends AppCompatActivity {
     // Creates a request object
     private void requestItem(String itemName, String lessorName, String category) {
         // Create request and save to Firebase
-        String uniqueKey = dRef.child("Lessors").child(lessorName).child("Requests").push().getKey();
+        String uniqueKey = dRefReq.child(lessorName).child("Requests").push().getKey();
 
         Request request = new Request(lessorName, itemName, category, "pending");
 
         // Store the item under the unique key
         if (uniqueKey != null) {
-            dRef.child("Lessors").child(lessorName).child("Requests").child(uniqueKey).setValue(request)
+            dRefReq.child(lessorName).child("Requests").child(uniqueKey).setValue(request)
                     .addOnSuccessListener(aVoid -> {
                         Toast.makeText(SearchItemsActivity.this, "Request added", Toast.LENGTH_SHORT).show();
                         finish();
