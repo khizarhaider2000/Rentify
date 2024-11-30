@@ -1,6 +1,7 @@
 package com.example.rentify;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -11,6 +12,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.database.DataSnapshot;
@@ -65,6 +67,16 @@ public class SearchItemsActivity extends AppCompatActivity {
         Button searchItemButton = findViewById(R.id.searchButton2);
         EditText itemName = findViewById(R.id.itemName);
 
+        // Check if any items in the listview are long clicked
+        itemListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Item item = (Item) itemList.get(i);
+                showRequestDialog(item.getItemName(), item.getLessorName(), item.getCategory());
+                return true;
+            }
+        });
+
 
         ArrayList<String> categories = new ArrayList<String>();
         dRef.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -116,9 +128,7 @@ public class SearchItemsActivity extends AppCompatActivity {
 
                                     if (itemList.isEmpty()) {
                                         Toast.makeText(SearchItemsActivity.this, "No items listed under " + category, Toast.LENGTH_SHORT).show();
-                                    }
-
-                                    else {
+                                    } else {
                                         ItemAdapter itemAdapter = new ItemAdapter(SearchItemsActivity.this, itemList);
                                         itemListView.setAdapter(itemAdapter);
                                     }
@@ -129,12 +139,9 @@ public class SearchItemsActivity extends AppCompatActivity {
                                     Toast.makeText(SearchItemsActivity.this, "Database error: " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
                                 }
                             });
-                        }
-                        else if (!(isAlpha(enteredItemName))) {
+                        } else if (!(isAlpha(enteredItemName))) {
                             Toast.makeText(SearchItemsActivity.this, "Name of item must only be of letters", Toast.LENGTH_SHORT).show();
-                        }
-
-                        else {
+                        } else {
                             databaseReference.child(category).addValueEventListener(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(DataSnapshot dataSnapshot) {
@@ -144,7 +151,7 @@ public class SearchItemsActivity extends AppCompatActivity {
                                     }
 
                                     List<Item> searchedItemList = new ArrayList<>();
-                                    for (Item item: itemList) {
+                                    for (Item item : itemList) {
                                         if ((item.getItemName().toLowerCase()).startsWith(enteredItemName.toLowerCase())) {
                                             searchedItemList.add(item);
                                         }
@@ -172,5 +179,49 @@ public class SearchItemsActivity extends AppCompatActivity {
                 // Do nothing
             }
         });
+    }
+
+    // Pop up to request for item
+    private void showRequestDialog(String itemName, String lessorName, String category) {
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = getLayoutInflater();
+        final View dialogView = inflater.inflate(R.layout.activity_request_item, null);
+        dialogBuilder.setView(dialogView);
+
+        final Button buttonRequest = (Button) dialogView.findViewById(R.id.buttonRequest);
+
+        dialogBuilder.setTitle(itemName);
+        final AlertDialog b = dialogBuilder.create();
+        b.show();
+
+        buttonRequest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                requestItem(itemName, lessorName, category);
+                b.dismiss();
+            }
+        });
+
+    }
+
+    // Creates a request object
+    private void requestItem(String itemName, String lessorName, String category) {
+        // Create request and save to Firebase
+        String uniqueKey = dRef.child("Lessors").child(lessorName).child("Requests").push().getKey();
+
+        Request request = new Request(lessorName, itemName, category, "pending");
+
+        // Store the item under the unique key
+        if (uniqueKey != null) {
+            dRef.child("Lessors").child(lessorName).child("Requests").child(uniqueKey).setValue(request)
+                    .addOnSuccessListener(aVoid -> {
+                        Toast.makeText(SearchItemsActivity.this, "Request added", Toast.LENGTH_SHORT).show();
+                        finish();
+                    })
+                    .addOnFailureListener(e ->
+                            Toast.makeText(SearchItemsActivity.this, "Failed to add request: " + e.getMessage(), Toast.LENGTH_SHORT).show());
+        } else {
+            Toast.makeText(SearchItemsActivity.this, "Failed to generate a unique key", Toast.LENGTH_SHORT).show();
+        }
     }
 }
