@@ -23,20 +23,6 @@ public class RequestsActivity extends AppCompatActivity {
     ListView requestListView;
     private List<Request> requestsList;
     DatabaseReference databaseReference;
-    DatabaseReference dRefLessor;
-    DatabaseReference dRefUser;
-
-    // Validates if input contains alphabets only (allowed to have spaces in between alphabets)
-    private boolean isAlpha(String name) {
-        String nameCleaned = name.strip();
-        char[] chars = nameCleaned.toCharArray();
-        for (char c : chars) {
-            if ((!Character.isLetter(c)) && (!Character.isWhitespace(c))) {
-                return false;
-            }
-        }
-        return true;
-    }
 
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,9 +31,7 @@ public class RequestsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_view_requests);
 
         String username = getIntent().getStringExtra("username");
-
-        dRefLessor = FirebaseDatabase.getInstance().getReference("Lessors");
-        dRefUser = FirebaseDatabase.getInstance().getReference("Renters").child(username);
+        databaseReference = FirebaseDatabase.getInstance().getReference("Renters").child(username).child("Requests");
 
         requestListView = findViewById(R.id.requestsList);
         requestsList = new ArrayList<>();

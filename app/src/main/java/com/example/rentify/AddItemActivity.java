@@ -24,7 +24,6 @@ public class AddItemActivity extends AppCompatActivity {
 
     DatabaseReference dRef;
 
-    // Validates if input contains alphabets only (allowed to have spaces in between alphabets)
     private boolean isAlpha(String name) {
         String nameCleaned = name.strip();
         char[] chars = nameCleaned.toCharArray();
@@ -53,19 +52,28 @@ public class AddItemActivity extends AppCompatActivity {
         EditText itemTimePeriod = findViewById(R.id.itemTimePeriod);
         Button addItemButton = findViewById(R.id.addItemButton);
         Spinner categorySpinner = findViewById(R.id.categorySpinner);
+        Spinner timeUnitSpinner = findViewById(R.id.timeUnitSpinner);
         Button backButton = findViewById(R.id.backButton2);
 
+        // Populate time unit spinner
+        ArrayAdapter<String> timeUnitAdapter = new ArrayAdapter<>(
+                this,
+                android.R.layout.simple_spinner_item,
+                new String[]{"Hours", "Days", "Weeks"}
+        );
+        timeUnitAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        timeUnitSpinner.setAdapter(timeUnitAdapter);
+
         // Load categories from Firebase and populate Spinner
-        ArrayList<String> categories = new ArrayList<String>();
+        ArrayList<String> categories = new ArrayList<>();
         dRef.child("Categories").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-
                 for (DataSnapshot categorySnapshot : dataSnapshot.getChildren()) {
                     String existingCategoryName = categorySnapshot.child("categoryName").getValue(String.class);
                     categories.add(existingCategoryName);
                 }
-                ArrayAdapter<String> adapter = new ArrayAdapter<String>(AddItemActivity.this, android.R.layout.simple_spinner_item, categories);
+                ArrayAdapter<String> adapter = new ArrayAdapter<>(AddItemActivity.this, android.R.layout.simple_spinner_item, categories);
                 adapter.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
                 categorySpinner.setAdapter(adapter);
             }
@@ -76,58 +84,41 @@ public class AddItemActivity extends AppCompatActivity {
             }
         });
 
-        // Check for back button being clicked
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
+        backButton.setOnClickListener(view -> finish());
 
-        // Add item button within selected category
         categorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 String category = adapterView.getItemAtPosition(i).toString();
-                addItemButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
+                addItemButton.setOnClickListener(view1 -> {
 
-                        String enteredItemName = lessorItemName.getText().toString();
-                        String enteredDescription = itemDescription.getText().toString();
-                        String enteredCost = fee.getText().toString();
-                        String enteredTime = itemTimePeriod.getText().toString();
+                    String enteredItemName = lessorItemName.getText().toString();
+                    String enteredDescription = itemDescription.getText().toString();
+                    String enteredCost = fee.getText().toString();
+                    String enteredTime = itemTimePeriod.getText().toString();
+                    String timeUnit = timeUnitSpinner.getSelectedItem().toString();
 
-                        // Validate all input fields
-                        if ((enteredItemName.isEmpty()) || (enteredDescription.isEmpty()) || (enteredCost.isEmpty()) || (enteredTime.isEmpty())) {
-                            Toast.makeText(AddItemActivity.this, "Name, Description, Cost and Time Period for Item required", Toast.LENGTH_SHORT).show();
-                        }
-                        else if (!(isAlpha(enteredItemName))) {
-                            Toast.makeText(AddItemActivity.this, "Name of item must only be of letters", Toast.LENGTH_SHORT).show();
-                        }
-                        // enteredCost is already validated to accept only numeric/decimal values in EditText of UI
-                        // enteredTime is already validated to accept only integer values in EditText of UI
-                        // category is already validated to provide a dropdown menu of only existing categories
-                        else {
-                            // Create item and save to Firebase
-                            String uniqueKey = dRef.child("Lessors").child(username).child("Items").push().getKey();
+                    if (enteredItemName.isEmpty() || enteredDescription.isEmpty() || enteredCost.isEmpty() || enteredTime.isEmpty()) {
+                        Toast.makeText(AddItemActivity.this, "Name, Description, Cost and Time Period for Item required", Toast.LENGTH_SHORT).show();
+                    } else if (!isAlpha(enteredItemName)) {
+                        Toast.makeText(AddItemActivity.this, "Name of item must only be of letters", Toast.LENGTH_SHORT).show();
+                    } else {
+                        String uniqueKey = dRef.child("Lessors").child(username).child("Items").push().getKey();
 
-                            Item item = new Item(username, enteredItemName, category, enteredDescription, Math.round(Double.parseDouble(enteredCost)*100)/100D, Integer.parseInt(enteredTime));
+                        Item item = new Item(username, enteredItemName, category, enteredDescription,
+                                Math.round(Double.parseDouble(enteredCost) * 100) / 100D, Integer.parseInt(enteredTime), timeUnit);
 
-                            // Store the item under the unique key
-                            if (uniqueKey != null) {
-                                dRef.child("Items").child(category).child(item.getItemName()).setValue(item);
-                                dRef.child("Lessors").child(username).child("Items").child(uniqueKey).setValue(item)
+                        if (uniqueKey != null) {
+                            dRef.child("Items").child(category).child(item.getItemName()).setValue(item);
+                            dRef.child("Lessors").child(username).child("Items").child(uniqueKey).setValue(item)
                                     .addOnSuccessListener(aVoid -> {
                                         Toast.makeText(AddItemActivity.this, "Item added", Toast.LENGTH_SHORT).show();
                                         finish();
                                     })
                                     .addOnFailureListener(e ->
                                             Toast.makeText(AddItemActivity.this, "Failed to add item: " + e.getMessage(), Toast.LENGTH_SHORT).show());
-                            } else {
-                                Toast.makeText(AddItemActivity.this, "Failed to generate a unique key", Toast.LENGTH_SHORT).show();
-                            }
-                            finish();
+                        } else {
+                            Toast.makeText(AddItemActivity.this, "Failed to generate a unique key", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -135,10 +126,7 @@ public class AddItemActivity extends AppCompatActivity {
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
-                // Do nothing
             }
         });
-
     }
 }
-

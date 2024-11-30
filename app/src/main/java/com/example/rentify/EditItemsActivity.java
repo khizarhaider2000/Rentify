@@ -2,6 +2,7 @@ package com.example.rentify;
 
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -16,17 +17,21 @@ import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import org.checkerframework.checker.nullness.qual.NonNull;
+import org.checkerframework.checker.nullness.qual.Nullable;
+
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class EditItemsActivity extends AppCompatActivity {
+    private DatabaseReference globalItemsReference;
 
     private DatabaseReference databaseReference;
     private DatabaseReference itemsReference;
@@ -35,8 +40,6 @@ public class EditItemsActivity extends AppCompatActivity {
     private List<Item> lessorItemList;
     private List<String> itemKeys;
 
-
-    // Validates if input contains alphabets only (allowed to have spaces in between alphabets)
     private boolean isAlpha(String name) {
         String nameCleaned = name.strip();
         char[] chars = nameCleaned.toCharArray();
@@ -54,68 +57,83 @@ public class EditItemsActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_edit_items);
 
-        // Collect the username
+        // Collect the username for lessor-specific reference
         String username = getIntent().getStringExtra("username");
 
+        // Lessor-specific reference
         databaseReference = FirebaseDatabase.getInstance().getReference("Lessors").child(username).child("Items");
+
+        // Global "Items" node reference
+        globalItemsReference = FirebaseDatabase.getInstance().getReference("Items");
+
         lessorItemsListView = findViewById(R.id.lessorItemsList);
         lessorItemList = new ArrayList<>();
         itemKeys = new ArrayList<>();
 
-
-        // Check if any items in the listview are long clicked
-        lessorItemsListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Item item = (Item) lessorItemList.get(i);
-                String key = itemKeys.get(i);
-                showUpdateDeleteDialog(key, item.getItemName(),item.getDescription(), item.getFee(), item.getTimePeriod(), item.getCategory(), item.getLessorName());
-                return true;
-            }
+        lessorItemsListView.setOnItemLongClickListener((adapterView, view, i, l) -> {
+            Item item = lessorItemList.get(i);
+            String key = itemKeys.get(i);
+            showUpdateDeleteDialog(key, item);
+            return true;
         });
 
-        // Check for back button being clicked
         Button backButton = findViewById(R.id.backButton);
-
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
+        backButton.setOnClickListener(view -> finish());
     }
 
-    // Displays list of items
+
     @Override
     protected void onStart() {
         super.onStart();
+
+        // Attach a single ValueEventListener to the Items node
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                lessorItemList.clear(); // Clear list to avoid duplication
-                itemKeys.clear(); // Clear list of keys as well
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                // Clear the lists to prevent duplication
+                lessorItemList.clear();
+                itemKeys.clear();
 
+                // Loop through all children and populate the lists
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     Item item = snapshot.getValue(Item.class);
                     String key = snapshot.getKey();
 
+                    // Add item and key to the lists
                     lessorItemList.add(item);
-                    itemKeys.add(key); // Store the key for each item
+                    itemKeys.add(key);
                 }
-                ItemAdapter itemAdapter = new ItemAdapter(EditItemsActivity.this, lessorItemList);
-                lessorItemsListView.setAdapter(itemAdapter);
+
+                // Update the ListView
+                updateListView();
             }
 
             @Override
-            public void onCancelled(DatabaseError databaseError) {
+            public void onCancelled(@NonNull DatabaseError databaseError) {
                 Toast.makeText(EditItemsActivity.this, "Database error: " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
 
-    // Updates the list of items shown
-    private void showUpdateDeleteDialog(String key, String itemName,String itemDescription, double itemFee, int itemTimePeriod, String itemCategory, String lessorName) {
-        itemsReference = FirebaseDatabase.getInstance().getReference("Items").child(itemCategory).child(itemName);
+
+    private void updateListView() {
+        // Check if adapter is already set
+        if (lessorItemsListView.getAdapter() == null) {
+            ItemAdapter itemAdapter = new ItemAdapter(EditItemsActivity.this, lessorItemList);
+            lessorItemsListView.setAdapter(itemAdapter);
+        } else {
+            // Notify the adapter of dataset changes
+            ((ItemAdapter) lessorItemsListView.getAdapter()).notifyDataSetChanged();
+        }
+    }
+
+
+
+
+
+
+    private void showUpdateDeleteDialog(String key, Item item) {
+        itemsReference = FirebaseDatabase.getInstance().getReference("Items").child(item.getCategory()).child(item.getItemName());
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
         LayoutInflater inflater = getLayoutInflater();
         final View dialogView = inflater.inflate(R.layout.activity_update_item, null);
@@ -124,31 +142,43 @@ public class EditItemsActivity extends AppCompatActivity {
         dRef = FirebaseDatabase.getInstance().getReference();
 
         // UI components
-        final EditText editTextItemName = (EditText) dialogView.findViewById(R.id.editTextItemName);
-        final EditText editTextItemFee = (EditText) dialogView.findViewById(R.id.editTextFee);
-        Spinner categorySpinner = dialogView.findViewById(R.id.categorySpinner);
-        final EditText editTextItemTimePeriod = (EditText) dialogView.findViewById(R.id.editTextTimePeriod);
-        final EditText editTextDescription = (EditText) dialogView.findViewById(R.id.editTextDescription);
-        final Button buttonDelete = (Button) dialogView.findViewById(R.id.buttonDeleteItem);
-        final Button buttonUpdate = (Button) dialogView.findViewById(R.id.buttonUpdateItem);
+        final EditText editTextItemName = dialogView.findViewById(R.id.editTextItemName);
+        final EditText editTextItemFee = dialogView.findViewById(R.id.editTextFee);
+        final EditText editTextItemTimePeriod = dialogView.findViewById(R.id.editTextTimePeriod);
+        final EditText editTextDescription = dialogView.findViewById(R.id.editTextDescription);
+        final Spinner categorySpinner = dialogView.findViewById(R.id.categorySpinner);
+        final Spinner timeUnitSpinner = dialogView.findViewById(R.id.timeUnitSpinner);
+        final Button buttonDelete = dialogView.findViewById(R.id.buttonDeleteItem);
+        final Button buttonUpdate = dialogView.findViewById(R.id.buttonUpdateItem);
 
-        dialogBuilder.setTitle(itemName);
+        dialogBuilder.setTitle(item.getItemName());
         final AlertDialog b = dialogBuilder.create();
         b.show();
 
-        // Load categories from Firebase and populate Spinner
-        ArrayList<String> categories = new ArrayList<String>();
+        // Pre-fill data
+        editTextItemName.setText(item.getItemName());
+        editTextItemFee.setText(String.valueOf(item.getFee()));
+        editTextItemTimePeriod.setText(String.valueOf(item.getTimePeriod()));
+        editTextDescription.setText(item.getDescription());
+
+        // Populate category spinner
+        ArrayList<String> categories = new ArrayList<>();
         dRef.child("Categories").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-
                 for (DataSnapshot categorySnapshot : dataSnapshot.getChildren()) {
                     String existingCategoryName = categorySnapshot.child("categoryName").getValue(String.class);
                     categories.add(existingCategoryName);
                 }
-                ArrayAdapter<String> adapter = new ArrayAdapter<String>(EditItemsActivity.this, android.R.layout.simple_spinner_item, categories);
+                ArrayAdapter<String> adapter = new ArrayAdapter<>(EditItemsActivity.this, android.R.layout.simple_spinner_item, categories);
                 adapter.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
                 categorySpinner.setAdapter(adapter);
+
+                // Pre-select category
+                int categoryPosition = adapter.getPosition(item.getCategory());
+                categorySpinner.setSelection(categoryPosition);
+                Log.d("onDataChange", "Items updated: " + lessorItemList.toString());
+
             }
 
             @Override
@@ -157,70 +187,58 @@ public class EditItemsActivity extends AppCompatActivity {
             }
         });
 
-        // Check for delete button being clicked
-        buttonDelete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                deleteItem(key);
+        // Populate time unit spinner
+        ArrayAdapter<String> timeUnitAdapter = new ArrayAdapter<>(
+                EditItemsActivity.this,
+                android.R.layout.simple_spinner_item,
+                new String[]{"Hours", "Days", "Weeks"}
+        );
+        timeUnitAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        timeUnitSpinner.setAdapter(timeUnitAdapter);
+
+        // Pre-select time unit
+        int timeUnitPosition = timeUnitAdapter.getPosition(item.getTimeUnit());
+        timeUnitSpinner.setSelection(timeUnitPosition);
+
+        buttonDelete.setOnClickListener(view -> {
+            deleteItem(key);
+            b.dismiss();
+        });
+
+        buttonUpdate.setOnClickListener(view -> {
+            String enteredItemName = editTextItemName.getText().toString().trim();
+            String enteredFee = editTextItemFee.getText().toString().trim();
+            String enteredTime = editTextItemTimePeriod.getText().toString().trim();
+            String enteredDescription = editTextDescription.getText().toString();
+            String category = categorySpinner.getSelectedItem().toString();
+            String timeUnit = timeUnitSpinner.getSelectedItem().toString();
+
+            if (enteredItemName.isEmpty() || enteredDescription.isEmpty() || enteredFee.isEmpty() || enteredTime.isEmpty()) {
+                Toast.makeText(EditItemsActivity.this, "Name, Description, Cost and Time Period for Item required", Toast.LENGTH_SHORT).show();
+            } else if (!isAlpha(enteredItemName)) {
+                Toast.makeText(EditItemsActivity.this, "Name of item must only be of letters", Toast.LENGTH_SHORT).show();
+            } else {
+                updateItem(key, item.getLessorName(), enteredItemName, category, enteredDescription, enteredFee, enteredTime, timeUnit);
                 b.dismiss();
             }
         });
-
-        // Update item button within selected category
-        categorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                String category = adapterView.getItemAtPosition(i).toString();
-                buttonUpdate.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        String enteredItemName = editTextItemName.getText().toString().trim();
-                        String enteredFee = editTextItemFee.getText().toString().trim();
-                        String enteredTime = editTextItemTimePeriod.getText().toString().trim();
-                        String enteredDescription = editTextDescription.getText().toString();
-
-                        // Validate all input fields
-                        if ((enteredItemName.isEmpty()) || (enteredDescription.isEmpty()) || (enteredFee.isEmpty()) || (enteredTime.isEmpty())) {
-                            Toast.makeText(EditItemsActivity.this, "Name, Description, Cost and Time Period for Item required", Toast.LENGTH_SHORT).show();
-                        } else if (!(isAlpha(enteredItemName))) {
-                            Toast.makeText(EditItemsActivity.this, "Name of item must only be of letters", Toast.LENGTH_SHORT).show();
-                        }
-                        // enteredFee is already validated to accept only numeric/decimal values in EditText of UI
-                        // enteredTime is already validated to accept only integer values in EditText of UI
-                        // category is already validated to provide a dropdown menu of only existing categories
-
-                        // Update Item if all fields satisfied
-                        else {
-                            updateItem(key, lessorName, itemName,enteredItemName, category, enteredDescription, enteredFee, enteredTime);
-                            b.dismiss();
-                        }
-                    }
-                });
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-                // Do nothing
-            }
-        });
     }
 
-    // Removes item from database
     private void deleteItem(String key) {
-        DatabaseReference dR = databaseReference.child(key);
-        itemsReference.removeValue();
-        dR.removeValue();
+        // Remove from lessor-specific path
+        databaseReference.child(key).removeValue();
+
+        // Remove from global Items node
+        globalItemsReference.child(key).removeValue();
+
         Toast.makeText(getApplicationContext(), "Item Deleted", Toast.LENGTH_LONG).show();
     }
 
-    // Updates item information in database
-    private void updateItem(String key, String username, String oldItemName, String itemName, String category, String description, String fee, String timePeriod){
 
+    private void updateItem(String key, String username, String itemName, String category, String description, String fee, String timePeriod, String timeUnit) {
         DatabaseReference dR = databaseReference.child(key);
-        // Create a new item with the updated details
-        Item updatedItem = new Item(username, itemName, category, description, Math.round(Double.parseDouble(fee)*100)/100D, Integer.parseInt(timePeriod));
+        Item updatedItem = new Item(username, itemName, category, description, Math.round(Double.parseDouble(fee) * 100) / 100D, Integer.parseInt(timePeriod), timeUnit);
 
-        // Update the item with the new details
         dR.setValue(updatedItem).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 Toast.makeText(getApplicationContext(), "Updated Item", Toast.LENGTH_LONG).show();
@@ -232,5 +250,4 @@ public class EditItemsActivity extends AppCompatActivity {
         itemsReference.removeValue();
         dRef.child("Items").child(category).child(updatedItem.getItemName()).setValue(updatedItem);
     }
-
 }

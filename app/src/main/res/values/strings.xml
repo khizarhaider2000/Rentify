@@ -50,4 +50,12 @@
     <string name="Requests">Requests</string>
     <string name="lessorNameText">Lessor Name</string>
     <string name="statusText">Status</string>
+    <string name="timeUnitText">Time Unit</string>
+    <string-array name="time_units">
+        <item>Hours</item>
+        <item>Days</item>
+        <item>Weeks</item>
+    </string-array>
+
+
 </resources>

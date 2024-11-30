@@ -24,7 +24,7 @@ public class RequestAdapter extends ArrayAdapter<Request> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = context.getLayoutInflater();
-        View listViewItem = inflater.inflate(R.layout.activity_request_item, null, true);
+        View listViewItem = inflater.inflate(R.layout.activity_request_info, null, true);
 
         TextView textViewName = listViewItem.findViewById(R.id.itemNameTextView);
         TextView textViewLessorName = listViewItem.findViewById(R.id.lessorNameTextView);

@@ -20,7 +20,8 @@ public class ItemAdapter extends ArrayAdapter<Item> {
         this.items = items;
     }
 
-    // List view item to display category information
+    // List view item to display item information
+
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = context.getLayoutInflater();
@@ -34,12 +35,17 @@ public class ItemAdapter extends ArrayAdapter<Item> {
 
         Item item = items.get(position);
 
+        // Set item details
         textViewName.setText("Item Name: " + item.getItemName());
         textViewDescription.setText("Description: " + item.getDescription());
         textViewFee.setText("Fee: $" + item.getFee());
         textViewCategory.setText("Category: " + item.getCategory());
-        textViewTime.setText("Time Period: " + item.getTimePeriod() + " week(s)");
+
+        // Dynamically set time period with the correct time unit
+        String timeUnit = item.getTimeUnit() != null ? item.getTimeUnit() : "week(s)";
+        textViewTime.setText("Time Period: " + item.getTimePeriod() + " " + timeUnit);
 
         return listViewItem;
     }
+
 }

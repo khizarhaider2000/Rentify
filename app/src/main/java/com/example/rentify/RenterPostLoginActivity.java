@@ -54,6 +54,7 @@ public class RenterPostLoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(RenterPostLoginActivity.this, RequestsActivity.class);
+                intent.putExtra("username", username);
                 startActivity(intent);
             }
         });
