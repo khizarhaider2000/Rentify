@@ -47,4 +47,7 @@
     <string name="Request">Request</string>
     <string name="requestsText">Requests</string>
     <string name="manageText">Manage</string>
+    <string name="Requests">Requests</string>
+    <string name="lessorNameText">Lessor Name</string>
+    <string name="statusText">Status</string>
 </resources>

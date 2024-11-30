@@ -32,6 +32,7 @@ public class SearchItemsActivity extends AppCompatActivity {
     DatabaseReference databaseReference;
     DatabaseReference dRef;
     DatabaseReference dRefReq;
+    DatabaseReference dRefUser;
     private List<Item> itemList;
 
     // Validates if input contains alphabets only (allowed to have spaces in between alphabets)
@@ -52,9 +53,12 @@ public class SearchItemsActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_search_items);
 
+        String username = getIntent().getStringExtra("username");
+
         databaseReference = FirebaseDatabase.getInstance().getReference("Items");
         dRef = FirebaseDatabase.getInstance().getReference("Categories");
         dRefReq = FirebaseDatabase.getInstance().getReference("Lessors");
+        dRefUser = FirebaseDatabase.getInstance().getReference("Renters").child(username);
 
         itemListView = findViewById(R.id.itemListView);
         itemList = new ArrayList<>();
@@ -69,7 +73,7 @@ public class SearchItemsActivity extends AppCompatActivity {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Item item = (Item) itemList.get(i);
-                showRequestDialog(item.getItemName(), item.getLessorName(), item.getCategory());
+                showRequestDialog(item.getItemName(), item.getLessorName(), item.getCategory(), username);
                 return true;
             }
         });
@@ -179,7 +183,7 @@ public class SearchItemsActivity extends AppCompatActivity {
     }
 
     // Pop up to request for item
-    private void showRequestDialog(String itemName, String lessorName, String category) {
+    private void showRequestDialog(String itemName, String lessorName, String category, String username) {
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
         LayoutInflater inflater = getLayoutInflater();
         final View dialogView = inflater.inflate(R.layout.activity_request_item, null);
@@ -194,7 +198,7 @@ public class SearchItemsActivity extends AppCompatActivity {
         buttonRequest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                requestItem(itemName, lessorName, category);
+                requestItem(itemName, lessorName, category, username);
                 b.dismiss();
             }
         });
@@ -202,16 +206,17 @@ public class SearchItemsActivity extends AppCompatActivity {
     }
 
     // Creates a request object
-    private void requestItem(String itemName, String lessorName, String category) {
+    private void requestItem(String itemName, String lessorName, String category, String username) {
         // Create request and save to Firebase
         String uniqueKey = dRefReq.child(lessorName).child("Requests").push().getKey();
 
-        Request request = new Request(lessorName, itemName, category, "pending");
+        Request request = new Request(lessorName, itemName, category, "pending", username);
 
         // Store the item under the unique key
         if (uniqueKey != null) {
             dRefReq.child(lessorName).child("Requests").child(uniqueKey).setValue(request)
                     .addOnSuccessListener(aVoid -> {
+                        dRefUser.child("Requests").child(uniqueKey).setValue(request);
                         Toast.makeText(SearchItemsActivity.this, "Request added", Toast.LENGTH_SHORT).show();
                         finish();
                     })
