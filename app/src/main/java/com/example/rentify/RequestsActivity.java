@@ -36,8 +36,8 @@ public class RequestsActivity extends AppCompatActivity {
         requestListView = findViewById(R.id.requestsList);
         requestsList = new ArrayList<>();
 
+        // Check for back button being clicked
         Button backButton = findViewById(R.id.backButton);
-
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -46,6 +46,7 @@ public class RequestsActivity extends AppCompatActivity {
         });
     }
 
+    // Display requests in a list
     @Override
     protected void onStart() {
         super.onStart();

@@ -86,6 +86,7 @@ public class AddItemActivity extends AppCompatActivity {
 
         backButton.setOnClickListener(view -> finish());
 
+        // Creating and saving Item (associated with a category) to database
         categorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {

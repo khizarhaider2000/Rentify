@@ -9,7 +9,7 @@ public class Request {
     private String renterName;
 
 
-    // Default constructor required for calls to DataSnapshot.getValue(Category.class)
+    // Default constructor
     public Request() {}
 
     public Request(String lessorName, String itemName, String category, String status, String renterName) {

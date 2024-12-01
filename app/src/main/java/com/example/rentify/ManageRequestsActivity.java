@@ -64,6 +64,7 @@ public class ManageRequestsActivity extends AppCompatActivity {
         });
     }
 
+    // Display requests in a list
     @Override
     protected void onStart() {
         super.onStart();
@@ -126,7 +127,7 @@ public class ManageRequestsActivity extends AppCompatActivity {
     }
 
     private void acceptRequest(String key, String renterName, String status, String itemName) {
-        // acceptRequest functionality
+        // Accepting request and updating status
         DatabaseReference databaseReferenceRenterReq = FirebaseDatabase.getInstance().getReference("Renters").child(renterName).child("Requests");
 
         if (status.equalsIgnoreCase("pending")) {
@@ -137,7 +138,7 @@ public class ManageRequestsActivity extends AppCompatActivity {
     }
 
     private void denyRequest(String key, String renterName, String status, String itemName) {
-        // denyRequest functionality
+        // Denying request and updating status
         DatabaseReference databaseReferenceRenterReq = FirebaseDatabase.getInstance().getReference("Renters").child(renterName).child("Requests");
 
         if (status.equalsIgnoreCase("pending")) {

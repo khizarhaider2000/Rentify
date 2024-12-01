@@ -63,6 +63,7 @@ public class SearchItemsActivity extends AppCompatActivity {
         itemListView = findViewById(R.id.itemListView);
         itemList = new ArrayList<>();
 
+        // UI components
         Spinner itemSpinner = findViewById(R.id.itemSpinner);
         Button backButton = findViewById(R.id.backButton3);
         Button searchItemButton = findViewById(R.id.manageButton);
@@ -78,7 +79,7 @@ public class SearchItemsActivity extends AppCompatActivity {
             }
         });
 
-
+        // Load categories from Firebase and populate Spinner
         ArrayList<String> categories = new ArrayList<String>();
         dRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -106,7 +107,7 @@ public class SearchItemsActivity extends AppCompatActivity {
             }
         });
 
-        // Add item button within selected category
+        // Search items button within a selected category (and specifying item name is optional)
         itemSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -117,6 +118,7 @@ public class SearchItemsActivity extends AppCompatActivity {
                         String category = adapterView.getItemAtPosition(i).toString();
                         itemList.clear(); // Clear list to avoid duplication
 
+                        // Search only by category if an item name is not specified
                         if (enteredItemName.isEmpty()) {
                             databaseReference.child(category).addValueEventListener(new ValueEventListener() {
                                 @Override
@@ -129,10 +131,10 @@ public class SearchItemsActivity extends AppCompatActivity {
 
                                     if (itemList.isEmpty()) {
                                         Toast.makeText(SearchItemsActivity.this, "No items listed under " + category, Toast.LENGTH_SHORT).show();
-                                    } else {
-                                        ItemAdapter itemAdapter = new ItemAdapter(SearchItemsActivity.this, itemList);
-                                        itemListView.setAdapter(itemAdapter);
                                     }
+                                    ItemAdapter itemAdapter = new ItemAdapter(SearchItemsActivity.this, itemList);
+                                    itemListView.setAdapter(itemAdapter);
+
                                 }
 
                                 @Override
@@ -140,9 +142,13 @@ public class SearchItemsActivity extends AppCompatActivity {
                                     Toast.makeText(SearchItemsActivity.this, "Database error: " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
                                 }
                             });
-                        } else if (!(isAlpha(enteredItemName))) {
+                        }
+                        // Validate entered item name
+                        else if (!(isAlpha(enteredItemName))) {
                             Toast.makeText(SearchItemsActivity.this, "Name of item must only be of letters", Toast.LENGTH_SHORT).show();
-                        } else {
+                        }
+                        // Search with selected category and item name
+                        else {
                             databaseReference.child(category).addValueEventListener(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(DataSnapshot dataSnapshot) {
@@ -159,7 +165,7 @@ public class SearchItemsActivity extends AppCompatActivity {
                                     }
 
                                     if (searchedItemList.isEmpty()) {
-                                        Toast.makeText(SearchItemsActivity.this, "No item found ", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(SearchItemsActivity.this, "No item found!", Toast.LENGTH_SHORT).show();
                                     }
                                     ItemAdapter itemAdapter = new ItemAdapter(SearchItemsActivity.this, searchedItemList);
                                     itemListView.setAdapter(itemAdapter);
@@ -195,6 +201,7 @@ public class SearchItemsActivity extends AppCompatActivity {
         final AlertDialog b = dialogBuilder.create();
         b.show();
 
+        // Check for request button being clicked
         buttonRequest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
