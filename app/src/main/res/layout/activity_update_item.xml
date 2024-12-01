@@ -2,87 +2,104 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="16dp">
 
+    <!-- Item Name -->
     <EditText
         android:id="@+id/editTextItemName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/itemNameText" />
+        android:hint="@string/itemNameText"
+        android:inputType="text" />
 
+    <!-- Fee -->
     <EditText
         android:id="@+id/editTextFee"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:layout_below="@id/editTextItemName"
+        android:layout_marginTop="10dp"
         android:hint="@string/feeText"
         android:inputType="numberDecimal" />
 
+    <!-- Category -->
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/textViewCategory"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
         android:layout_marginTop="10dp"
         android:text="@string/categoryText"
-        android:textColor="@color/material_dynamic_neutral60"
         android:textSize="19sp" />
 
     <Spinner
         android:id="@+id/categorySpinner"
         android:layout_width="match_parent"
-        android:layout_height="36dp" />
+        android:layout_height="36dp"
+        android:layout_marginTop="5dp" />
 
+    <!-- Time Period -->
     <EditText
         android:id="@+id/editTextTimePeriod"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:layout_below="@id/editTextItemName"
-        android:hint="@string/timePeriodWeeksText"
+        android:layout_marginTop="10dp"
+        android:hint="@string/timePeriodText"
         android:inputType="number" />
 
+    <!-- Time Unit -->
+    <TextView
+        android:id="@+id/textViewTimeUnit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="@string/timeUnitText"
+        android:textSize="19sp" />
+
+    <Spinner
+        android:id="@+id/timeUnitSpinner"
+        android:layout_width="match_parent"
+        android:layout_height="36dp"
+        android:layout_marginTop="5dp" />
+
+    <!-- Description -->
     <EditText
         android:id="@+id/editTextDescription"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/editTextItemName"
-        android:fadeScrollbars="false"
+        android:layout_marginTop="10dp"
         android:hint="@string/descriptionText"
         android:inputType="textMultiLine"
-        android:maxLines="7"
-        android:overScrollMode="always"
+        android:maxLines="5"
         android:scrollbars="vertical" />
 
+    <!-- Buttons -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         android:orientation="horizontal">
 
         <Button
             android:id="@+id/buttonUpdateItem"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="2"
+            android:layout_weight="1"
             android:backgroundTint="#3F51B5"
-            android:fontFamily="@font/netflix"
-            android:padding="12dp"
             android:text="@string/updateText"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-            android:textSize="20sp" />
+            android:textColor="#FFFFFF"
+            android:textSize="16sp" />
 
         <Button
             android:id="@+id/buttonDeleteItem"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="2"
-            android:backgroundTint="#3F51B5"
-            android:fontFamily="@font/netflix"
-            android:padding="12dp"
+            android:layout_weight="1"
+            android:layout_marginStart="10dp"
+            android:backgroundTint="#FF0000"
             android:text="@string/deleteText"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-            android:textSize="20sp" />
+            android:textColor="#FFFFFF"
+            android:textSize="16sp" />
 
     </LinearLayout>
-
 
 </LinearLayout>

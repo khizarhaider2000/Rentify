@@ -8,19 +8,25 @@ public class Item {
     private double fee;
     private int timePeriod;
     private String category;
-
+    private String timeUnit;
 
     // Default constructor required for calls to DataSnapshot.getValue(Category.class)
     public Item() {}
 
-    public Item(String lessorName, String itemName, String category, String description, double fee, int timePeriod) {
+
+
+    public Item(String lessorName, String itemName, String category, String description, double fee, int timePeriod, String timeUnit) {
         this.lessorName = lessorName;
         this.itemName = itemName;
         this.description = description;
         this.category = category;
         this.fee = fee;
         this.timePeriod = timePeriod;
+        this.timeUnit = timeUnit;
     }
+
+
+
 
     // Getters and Setters
     public String getLessorName() { return lessorName; }
@@ -40,4 +46,7 @@ public class Item {
 
     public String getCategory() { return category; }
     public void setCategory(String category) { this.category = category;}
+
+    public String getTimeUnit() { return timeUnit; }
+    public void setTimeUnit(String timeUnit) { this.timeUnit = timeUnit; }
 }

@@ -54,4 +54,11 @@
     <string name="renterNameText">Renter Name</string>
     <string name="acceptText">Accept</string>
     <string name="denyText">Deny</string>
+    <string name="timeUnitText">Time Unit</string>
+    <string-array name="time_units">
+        <item>Hours</item>
+        <item>Days</item>
+        <item>Weeks</item>
+    </string-array>
+
 </resources>
