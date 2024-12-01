@@ -65,7 +65,7 @@ public class LessorPostLoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(LessorPostLoginActivity.this, ManageRequestsActivity.class);
-                //intent.putExtra("username", username);
+                intent.putExtra("username", username);
                 startActivity(intent);
             }
         });

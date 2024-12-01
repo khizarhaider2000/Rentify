@@ -50,4 +50,8 @@
     <string name="Requests">Requests</string>
     <string name="lessorNameText">Lessor Name</string>
     <string name="statusText">Status</string>
+    <string name="searchItemsText">Search Items</string>
+    <string name="renterNameText">Renter Name</string>
+    <string name="acceptText">Accept</string>
+    <string name="denyText">Deny</string>
 </resources>

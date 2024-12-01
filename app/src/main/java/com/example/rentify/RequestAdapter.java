@@ -20,7 +20,7 @@ public class RequestAdapter extends ArrayAdapter<Request> {
         this.requests = requests;
     }
 
-    // List view item to display category information
+    // List view item to display request information
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = context.getLayoutInflater();
@@ -37,6 +37,14 @@ public class RequestAdapter extends ArrayAdapter<Request> {
         textViewLessorName.setText("Lessor Name: " + request.getLessorName());   
         textViewStatus.setText("Status: " + request.getStatus());
         textViewCategory.setText("Category: " + request.getCategory());
+
+        // Set the color of the status based on its value
+        String status = request.getStatus();
+        if ("accepted".equalsIgnoreCase(status)) {
+            textViewStatus.setTextColor(context.getResources().getColor(R.color.status_accepted)); // Green
+        } else if ("denied".equalsIgnoreCase(status)) {
+            textViewStatus.setTextColor(context.getResources().getColor(R.color.status_denied)); // Red
+        }
 
         return listViewItem;
     }
