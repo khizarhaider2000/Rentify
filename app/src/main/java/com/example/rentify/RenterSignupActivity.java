@@ -102,7 +102,7 @@ public class RenterSignupActivity extends AppCompatActivity {
                                         if (snapshot.exists()) {
                                             Toast.makeText(RenterSignupActivity.this, "Email is already associated with an account", Toast.LENGTH_SHORT).show();
                                         } else {
-                                            // Database reference stores all lessor information under "Lessors"
+                                            // Database reference stores all renter information under "Renters"
                                             dRef.child("Renters").child(enteredUsername).child("userType").setValue("Renter");
                                             dRef.child("Renters").child(enteredUsername).child("userName").setValue(enteredUsername);
                                             dRef.child("Renters").child(enteredUsername).child("firstName").setValue(enteredFirstname);
@@ -110,7 +110,7 @@ public class RenterSignupActivity extends AppCompatActivity {
                                             dRef.child("Renters").child(enteredUsername).child("email").setValue(enteredEmail);
                                             dRef.child("Renters").child(enteredUsername).child("password").setValue(enteredPassword);
 
-                                            // Navigate to Post Login Activity along with renter information
+                                            // Navigate to Renter Post Login Activity along with renter information
                                             Toast.makeText(RenterSignupActivity.this, "Congrats on your Renter Account", Toast.LENGTH_SHORT).show();
                                             Intent intent = new Intent(RenterSignupActivity.this, RenterPostLoginActivity.class);
                                             intent.putExtra("accountType", "Renter");

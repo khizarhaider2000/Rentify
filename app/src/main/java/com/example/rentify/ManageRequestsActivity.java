@@ -48,7 +48,13 @@ public class ManageRequestsActivity extends AppCompatActivity {
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Request request = (Request) requestsList.get(i);
                 String key = requestKeys.get(i);
-                showDenyAcceptDialog(key, request.getRenterName(), request.getStatus(), request.getItemName());
+
+                // Only "pending" requests are allowed to be "accepted" or "denied" by lessor
+                if ((request.getStatus()).equalsIgnoreCase("pending")) {
+                    showDenyAcceptDialog(key, request.getRenterName(), request.getStatus(), request.getItemName());
+                } else {
+                    Toast.makeText(ManageRequestsActivity.this, "Request is already accepted/denied", Toast.LENGTH_SHORT).show();
+                }
                 return true;
             }
         });
