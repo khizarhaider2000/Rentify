@@ -6,6 +6,13 @@
 
 ---
 
+## 🎥 Demo Video
+
+[![Watch the demo on YouTube](https://img.youtube.com/vi/uXYDXKlzsSY/0.jpg)](https://youtu.be/uXYDXKlzsSY)
+
+> Click the thumbnail above to watch a short walkthrough of the Rentify app in action, including item listing, photo upload, category selection, and admin functionality.
+
+
 ## ✨ Features
 
 ### 🔒 Admin
